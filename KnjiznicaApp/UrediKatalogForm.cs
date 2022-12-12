@@ -21,7 +21,9 @@ namespace KnjiznicaApp
 
         private void UrediKatalogForm_Load(object sender, EventArgs e)
         {
-            
+            // TODO: This line of code loads data into the 'knjiznicaDataSet4.GetAllKnjigeForIspis' table. You can move, or remove it, as needed.
+            this.getAllKnjigeForIspisTableAdapter.Fill(this.knjiznicaDataSet4.GetAllKnjigeForIspis);
+
 
             AutoriCombobox.Items.AddRange(DataAcces.GetAutorPrezimeIme().ToArray());
             AutoriCombobox.DisplayMember = "AutorPrezimeIme";
@@ -71,6 +73,12 @@ namespace KnjiznicaApp
             AutoriUlogeListView.Items.AddRange(LVIlista.ToArray());
 
             
+        }
+
+        private void DodajKnjiguButton_Click(object sender, EventArgs e)
+        {
+            DataAcces.InsertKnjiga(UrediNazivTxtBox.Text, null, int.Parse(UrediGodinaTxtBox.Text));
+            this.getAllKnjigeForIspisTableAdapter.Fill(this.knjiznicaDataSet4.GetAllKnjigeForIspis);
         }
     }
 }

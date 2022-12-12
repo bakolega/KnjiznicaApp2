@@ -50,21 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KnjiznicaDataSet1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KnjiznicaDataSet1.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="KnjiznicaDataSet2.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KnjiznicaDataSet2.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="KnjiznicaDataSet3.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KnjiznicaDataSet3.xsd</DependentUpon>
-    </Compile>
     <Compile Include="KnjiznicaDataSet4.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,11 +77,6 @@
     </Compile>
     <Compile Include="Helper.cs" />
     <Compile Include="Modeli.cs" />
-    <Compile Include="KnjiznicaDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KnjiznicaDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="KnjiznicarForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,50 +106,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="KnjiznicaDataSet.xsc">
-      <DependentUpon>KnjiznicaDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="KnjiznicaDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>KnjiznicaDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="KnjiznicaDataSet.xss">
-      <DependentUpon>KnjiznicaDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="KnjiznicaDataSet1.xsc">
-      <DependentUpon>KnjiznicaDataSet1.xsd</DependentUpon>
-    </None>
-    <None Include="KnjiznicaDataSet1.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>KnjiznicaDataSet1.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="KnjiznicaDataSet1.xss">
-      <DependentUpon>KnjiznicaDataSet1.xsd</DependentUpon>
-    </None>
-    <None Include="KnjiznicaDataSet2.xsc">
-      <DependentUpon>KnjiznicaDataSet2.xsd</DependentUpon>
-    </None>
-    <None Include="KnjiznicaDataSet2.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>KnjiznicaDataSet2.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="KnjiznicaDataSet2.xss">
-      <DependentUpon>KnjiznicaDataSet2.xsd</DependentUpon>
-    </None>
-    <None Include="KnjiznicaDataSet3.xsc">
-      <DependentUpon>KnjiznicaDataSet3.xsd</DependentUpon>
-    </None>
-    <None Include="KnjiznicaDataSet3.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>KnjiznicaDataSet3.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="KnjiznicaDataSet3.xss">
-      <DependentUpon>KnjiznicaDataSet3.xsd</DependentUpon>
-    </None>
     <None Include="KnjiznicaDataSet4.xsc">
       <DependentUpon>KnjiznicaDataSet4.xsd</DependentUpon>
     </None>

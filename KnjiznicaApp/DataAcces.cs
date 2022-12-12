@@ -55,9 +55,12 @@ namespace KnjiznicaApp
             }
 
         }
-        public void insertKnjiga(string naziv, string autor, int godina) 
+        public static void InsertKnjiga(string naziv, string autor, int godina) 
         {
-
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.InsertKnjiga @NazivPar='{naziv}',@GodinaPar={godina}");
+            }
         }
     }
 }
