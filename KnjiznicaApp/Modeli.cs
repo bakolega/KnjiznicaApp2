@@ -8,7 +8,7 @@ namespace KnjiznicaApp
 {
     internal class Knjiga 
     {
-        public int Id { get; set; }
+        public int KnjigaID { get; set; }
         public string Naziv { get; set; }
         public string Autori { get; set; }
         public string Prevoditelji { get; set; }
@@ -52,6 +52,12 @@ namespace KnjiznicaApp
         public string Jezik { get; set; }
         public string Izdavac { get; set; }
         public string Mjesto { get; set; }
+    }
+
+    internal class Izdavaci
+    {
+        public string IzdavacID { get; set; }
+        public string Naziv { get; set; }
     }
 
 }

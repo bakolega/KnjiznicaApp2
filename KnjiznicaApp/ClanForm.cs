@@ -25,8 +25,12 @@ namespace KnjiznicaApp
 
         private void ClanForm_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'knjiznicaDataSet.GetAllKnjigeForIspis' table. You can move, or remove it, as needed.
+            this.getAllKnjigeForIspisTableAdapter.Fill(this.knjiznicaDataSet.GetAllKnjigeForIspis);
+            // TODO: This line of code loads data into the 'knjiznicaDataSet.GetAllKnjigeForIspis' table. You can move, or remove it, as needed.
+            this.getAllKnjigeForIspisTableAdapter.Fill(this.knjiznicaDataSet.GetAllKnjigeForIspis);
             // TODO: This line of code loads data into the 'knjiznicaDataSet4.GetAllKnjigeForIspis' table. You can move, or remove it, as needed.
-            this.getAllKnjigeForIspisTableAdapter.Fill(this.knjiznicaDataSet4.GetAllKnjigeForIspis);
+            // this.getAllKnjigeForIspisTableAdapter.Fill(this.knjiznicaDataSet4.GetAllKnjigeForIspis);
 
 
         }
@@ -50,26 +54,30 @@ namespace KnjiznicaApp
 
         private void ClanDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int tempID = (int)ClanDataGridView["knjigaIDDataGridViewTextBoxColumn", e.RowIndex].Value;
-            IDUrediTxtBox.Text = tempID.ToString();//Ispisi izabrani ID
-            UrediNazivTxtBox.Text = ClanDataGridView["nazivDataGridViewTextBoxColumn", e.RowIndex].Value.ToString();//Ispisi izabrani naziv knjige
 
-            //Ispisuje uloge autora na listviewu
-            AutoriUlogeListView.Items.Clear();
-            LinkedList<ListViewItem> LVIlista = new LinkedList<ListViewItem>();
-            foreach (UlogaAutori item in DataAcces.GetAutorUlogeForKnjiga(tempID))
+            if (e.RowIndex > -1)
             {
-                ListViewItem temp = new ListViewItem();
-                temp.Text = item.UlogaNaziv;
-                temp.SubItems.Add(item.Autori);
-                LVIlista.AddLast(temp);
-            }
-            AutoriUlogeListView.Items.AddRange(LVIlista.ToArray());
+                int tempID = (int)ClanDataGridView["knjigaIDDataGridViewTextBoxColumn", e.RowIndex].Value;
+                IDUrediTxtBox.Text = tempID.ToString();//Ispisi izabrani ID
+                UrediNazivTxtBox.Text = ClanDataGridView["nazivDataGridViewTextBoxColumn", e.RowIndex].Value.ToString();//Ispisi izabrani naziv knjige
 
-            Informacije inf = DataAcces.GetInformacije(tempID);
-            JezikTextBox.Text = inf.Jezik;
-            MjestoIzdavanjaTxtBox.Text = inf.Mjesto;
-            IzdavacTxtBox.Text = inf.Izdavac;
+                //Ispisuje uloge autora na listviewu
+                AutoriUlogeListView.Items.Clear();
+                LinkedList<ListViewItem> LVIlista = new LinkedList<ListViewItem>();
+                foreach (UlogaAutori item in DataAcces.GetAutorUlogeForKnjiga(tempID))
+                {
+                    ListViewItem temp = new ListViewItem();
+                    temp.Text = item.UlogaNaziv;
+                    temp.SubItems.Add(item.Autori);
+                    LVIlista.AddLast(temp);
+                }
+                AutoriUlogeListView.Items.AddRange(LVIlista.ToArray());
+
+                Informacije inf = DataAcces.GetInformacije(tempID);
+                JezikTextBox.Text = inf.Jezik;
+                MjestoIzdavanjaTxtBox.Text = inf.Mjesto;
+                IzdavacTxtBox.Text = inf.Izdavac;
+            }
             
         }
 
@@ -81,6 +89,12 @@ namespace KnjiznicaApp
         private void ClanDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void TraziButton_Click(object sender, EventArgs e)
+        {
+            this.getWhereNazivKnjigeTableAdapter.Fill(this.knjiznicaDataSet.GetWhereNazivKnjige, TraziTxtBox.Text);
+            ClanDataGridView.DataSource = getWhereNazivKnjigeBindingSource;
         }
     }
 }

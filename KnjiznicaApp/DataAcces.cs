@@ -14,7 +14,8 @@ namespace KnjiznicaApp
             //Using jer zatvara vezu
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
             {
-                return connection.Query<Knjiga>("dbo.GetAllKnjigeForIspis").ToList();//
+                List<Knjiga> temp = connection.Query<Knjiga>("dbo.GetAllKnjigeForIspis").ToList();//
+                return temp;
             }
             
         }
@@ -55,12 +56,39 @@ namespace KnjiznicaApp
             }
 
         }
-        public static void InsertKnjiga(string naziv, string autor, int godina) 
+        public static void InsertKnjiga(string naziv,int IzdavacIDpar, string autor, int godina) 
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
             {
-                connection.Query($"dbo.InsertKnjiga @NazivPar='{naziv}',@GodinaPar={godina}");
+                connection.Query($"dbo.InsertKnjiga @NazivPar='{naziv}',@IzdavacIDpar ={IzdavacIDpar},@GodinaPar={godina}");
+
+                //@NazivPar varchar(255),
+	            //@IzdavacIDPar int = null,
+                //@ISBN10Par char = null,
+                //@ISBN13Par char = null,
+                //@GodinaPar int = null,
+                //@MjestoIDPar int = null,
+                //@JezikIDPar int = null
             }
+        }
+
+        static public List<Izdavaci> GetIzdavaci()
+        {
+            //Using jer zatvara vezu
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                return connection.Query<Izdavaci>("select IzdavacID, Naziv from Izdavac").ToList();
+            }
+
+        }
+        static public void DeleteKnjiga(int ID)
+        {
+            //Using jer zatvara vezu
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                 connection.Query<Izdavaci>($"dbo.DeleteKnjiga @forID={ID}");
+            }
+
         }
     }
 }
