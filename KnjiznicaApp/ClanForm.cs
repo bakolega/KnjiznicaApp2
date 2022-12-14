@@ -28,11 +28,6 @@ namespace KnjiznicaApp
             // TODO: This line of code loads data into the 'knjiznicaDataSet.GetAllKnjigeForIspis' table. You can move, or remove it, as needed.
             this.getAllKnjigeForIspisTableAdapter.Fill(this.knjiznicaDataSet.GetAllKnjigeForIspis);
             // TODO: This line of code loads data into the 'knjiznicaDataSet.GetAllKnjigeForIspis' table. You can move, or remove it, as needed.
-            this.getAllKnjigeForIspisTableAdapter.Fill(this.knjiznicaDataSet.GetAllKnjigeForIspis);
-            // TODO: This line of code loads data into the 'knjiznicaDataSet4.GetAllKnjigeForIspis' table. You can move, or remove it, as needed.
-            // this.getAllKnjigeForIspisTableAdapter.Fill(this.knjiznicaDataSet4.GetAllKnjigeForIspis);
-
-
         }
 
 
@@ -57,26 +52,35 @@ namespace KnjiznicaApp
 
             if (e.RowIndex > -1)
             {
-                int tempID = (int)ClanDataGridView["knjigaIDDataGridViewTextBoxColumn", e.RowIndex].Value;
+                int tempID = (int)ClanDataGridView[0, e.RowIndex].Value;
                 IDUrediTxtBox.Text = tempID.ToString();//Ispisi izabrani ID
-                UrediNazivTxtBox.Text = ClanDataGridView["nazivDataGridViewTextBoxColumn", e.RowIndex].Value.ToString();//Ispisi izabrani naziv knjige
 
-                //Ispisuje uloge autora na listviewu
+                Informacije tempInfo = DataAcces.GetInformacije(tempID);// infomracije osim autora
+
+                UrediNazivTxtBox.Text = tempInfo.Naziv;
+                MjestoIzdavanjaTxtBox.Text = tempInfo.Izdavac;
+                JezikTextBox.Text = tempInfo.Jezik;
+                MjestoIzdavanjaTxtBox.Text = tempInfo.Mjesto;
+
+             
                 AutoriUlogeListView.Items.Clear();
-                LinkedList<ListViewItem> LVIlista = new LinkedList<ListViewItem>();
-                foreach (UlogaAutori item in DataAcces.GetAutorUlogeForKnjiga(tempID))
-                {
-                    ListViewItem temp = new ListViewItem();
-                    temp.Text = item.UlogaNaziv;
-                    temp.SubItems.Add(item.Autori);
-                    LVIlista.AddLast(temp);
-                }
-                AutoriUlogeListView.Items.AddRange(LVIlista.ToArray());
+                AutoriUlogeListView.Groups.Clear();
 
-                Informacije inf = DataAcces.GetInformacije(tempID);
-                JezikTextBox.Text = inf.Jezik;
-                MjestoIzdavanjaTxtBox.Text = inf.Mjesto;
-                IzdavacTxtBox.Text = inf.Izdavac;
+                int i = 0;
+                foreach (UlogaAutoriv2 item in DataAcces.GetAutorUlogeForKnjigav2(tempID))
+                {
+                    AutoriUlogeListView.Groups.Add(item.UlogaNaziv, item.UlogaNaziv).Tag = item.UlogaID;
+                    foreach (Autor atr in item.AutorIList)
+                    {
+                        ListViewItem tempLVItem = new ListViewItem();
+                        tempLVItem.Text = atr.AutorPrezimeIme;
+                        tempLVItem.Tag = atr.AutorID;
+
+                        AutoriUlogeListView.Groups[i].Items.Add(tempLVItem);
+                        AutoriUlogeListView.Items.Add(tempLVItem);
+                    }
+                    i++;
+                }
             }
             
         }

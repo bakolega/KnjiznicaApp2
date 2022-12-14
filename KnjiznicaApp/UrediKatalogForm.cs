@@ -30,16 +30,31 @@ namespace KnjiznicaApp
             //List<Knjiga> tempkn= DataAcces.getKnjigeIspis();
             // UrediDataGridView.DataSource= tempkn;
 
-            AutoriCombobox.Items.AddRange(DataAcces.GetAutorPrezimeIme().ToArray());
+            AutoriCombobox.DataSource = DataAcces.GetAutorPrezimeIme();
             AutoriCombobox.DisplayMember = "AutorPrezimeIme";
+            AutoriCombobox.ValueMember = "AutorID";
+            AutoriCombobox.SelectedItem = null;
 
-            UlogaComboBox.Items.AddRange(DataAcces.GetUloge().ToArray());
+            UlogaComboBox.DataSource=DataAcces.GetUloge();
             UlogaComboBox.DisplayMember = "UlogaNaziv";
+            UlogaComboBox.ValueMember = "UloagaID";
+            UlogaComboBox.SelectedItem = null;
 
-            IzdavciComboboc.Items.AddRange(DataAcces.GetIzdavaci().ToArray());
-            IzdavciComboboc.DisplayMember = "Naziv";
-            IzdavciComboboc.ValueMember = "IzdavacID";
+            UrediIzdavaciCombiBoc.DataSource = DataAcces.GetIzdavaci();
+            UrediIzdavaciCombiBoc.DisplayMember = "Naziv";
+            UrediIzdavaciCombiBoc.ValueMember = "IzdavacID";
+            UrediIzdavaciCombiBoc.SelectedItem = null;
 
+            JezikComboBox.DataSource = DataAcces.GetJezike();
+            JezikComboBox.DisplayMember = "Naziv";
+            JezikComboBox.ValueMember = "JezikID";
+            JezikComboBox.SelectedItem = null;
+
+            MjestoIzdavanjaComboBox.DataSource = DataAcces.GetMjesta();
+
+            MjestoIzdavanjaComboBox.DisplayMember = "Naziv";
+            MjestoIzdavanjaComboBox.ValueMember = "MjestoID";
+            MjestoIzdavanjaComboBox.SelectedItem = null;
 
 
         }
@@ -66,30 +81,52 @@ namespace KnjiznicaApp
 
         private void UrediDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //int tempID = (int)UrediDataGridView["knjigaIDDataGridViewTextBoxColumn", e.RowIndex].Value;
-            //IDUrediTxtBox.Text = tempID.ToString();//Ispisi izabrani ID
-            //UrediNazivTxtBox.Text = UrediDataGridView["nazivDataGridViewTextBoxColumn", e.RowIndex].Value.ToString();//Ispisi izabrani naziv knjige
-
-            ////Ispisuje uloge autora na listviewu
-            //AutoriUlogeListView.Items.Clear();
-            //LinkedList<ListViewItem> LVIlista = new LinkedList<ListViewItem>();
-            //foreach (UlogaAutori item in DataAcces.GetAutorUlogeForKnjiga(tempID))
-            //{
-            //    ListViewItem temp = new ListViewItem();
-            //    temp.Text = item.UlogaNaziv;
-            //    temp.SubItems.Add(item.Autori);
-            //    LVIlista.AddLast(temp);
-            //}
-            //AutoriUlogeListView.Items.AddRange(LVIlista.ToArray());
+            
 
             
         }
 
         private void DodajKnjiguButton_Click(object sender, EventArgs e)
         {
-           // var temp= IzdavciComboboc.SelectedValue;
+            if (UrediNazivTxtBox.Text == "")
+            {
+                MessageBox.Show("Unesite naziv");
+                return;
+            }
 
-            DataAcces.InsertKnjiga(UrediNazivTxtBox.Text,1, null, int.Parse(UrediGodinaTxtBox.Text));
+            int? tempIzdavacID;//Ako je izabrano postojece salje se ID izavaca,ako nije -1 sta se pretvara u NULL u funkciji
+            if (UrediIzdavaciCombiBoc.SelectedIndex > -1)
+            {
+                tempIzdavacID = (int)UrediIzdavaciCombiBoc.SelectedValue;
+            }
+            else
+            {
+                tempIzdavacID = null;
+            }
+
+            int? tempJezikID;
+            if (JezikComboBox.SelectedIndex > -1)
+            {
+                tempJezikID = (int)JezikComboBox.SelectedValue;
+            }
+            else
+            {
+                tempJezikID = null;
+            }
+
+            int? tempMjestoID;
+            if (MjestoIzdavanjaComboBox.SelectedIndex > -1)
+            {
+                tempMjestoID = (int)MjestoIzdavanjaComboBox.SelectedValue;
+            }
+            else
+            {
+                tempMjestoID = null;
+            }
+            
+            DataAcces.InsertKnjiga(UrediNazivTxtBox.Text, tempIzdavacID, (int)GodinaUpDown.Value, tempMjestoID, tempJezikID);
+
+            
         }
 
         private void UrediDataGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -99,22 +136,40 @@ namespace KnjiznicaApp
                 int tempID = (int)UrediDataGridView[0, e.RowIndex].Value;
                 
                 IDUrediTxtBox.Text = tempID.ToString();//Ispisi izabrani ID
-                UrediNazivTxtBox.Text = UrediDataGridView[1, e.RowIndex].Value.ToString();//Ispisi izabrani naziv knjige
+
+                Informacije tempInfo = DataAcces.GetInformacije(tempID);//Sve infomracije osim autora
+
+                UrediNazivTxtBox.Text = tempInfo.Naziv;
+                UrediIzdavaciCombiBoc.Text = tempInfo.Izdavac;
+                JezikComboBox.Text = tempInfo.Jezik;
+                MjestoIzdavanjaComboBox.Text = tempInfo.Mjesto;
+
+
 
                 //Ispisuje uloge autora na listviewu
-                AutoriUlogeListView.Items.Clear();
-                LinkedList<ListViewItem> LVIlista = new LinkedList<ListViewItem>();
-                foreach (UlogaAutori item in DataAcces.GetAutorUlogeForKnjiga(tempID))
-                {
-                    ListViewItem temp = new ListViewItem();
-                    temp.Text = item.UlogaNaziv;
-                    temp.SubItems.Add(item.Autori);
-                    LVIlista.AddLast(temp);
-                }
-                AutoriUlogeListView.Items.AddRange(LVIlista.ToArray());
 
-               // string tempIzdavac = UrediDataGridView[6, e.RowIndex].Value.ToString();
-               // IzdavciComboboc.SelectedValue= tempIzdavac;
+                AutoriUlogeListView.Items.Clear();
+                AutoriUlogeListView.Groups.Clear();
+
+              
+               
+                int i = 0;
+                foreach (UlogaAutoriv2 item in DataAcces.GetAutorUlogeForKnjigav2(tempID))
+                {
+                    AutoriUlogeListView.Groups.Add(item.UlogaNaziv, item.UlogaNaziv).Tag= item.UlogaID;
+                    foreach (Autor atr in item.AutorIList)
+                    {
+                        ListViewItem tempLVItem = new ListViewItem();
+                        tempLVItem.Text = atr.AutorPrezimeIme;
+                        tempLVItem.Tag = atr.AutorID;
+
+                        AutoriUlogeListView.Groups[i].Items.Add(tempLVItem);
+                        AutoriUlogeListView.Items.Add(tempLVItem);
+                    }
+                    i++;
+                }
+
+              
             }
         }
 
@@ -126,7 +181,60 @@ namespace KnjiznicaApp
 
         private void DeleteKnjiga_Click(object sender, EventArgs e)
         {
-            DataAcces.DeleteKnjiga(int.Parse(IDUrediTxtBox.Text));
+            
+            //DataAcces.DeleteKnjiga(int.Parse(IDUrediTxtBox.Text));
+
+            if (UrediDataGridView.SelectedRows.Count > 0)
+            {
+                
+                List<ID> idsToDelete = new List<ID>();
+                foreach (DataGridViewRow row in UrediDataGridView.SelectedRows)
+                {
+                    idsToDelete.Add(new ID { forID = (int)row.Cells[0].Value });
+                }
+                DataAcces.DeleteKnjige(idsToDelete);
+            }
+        }
+
+        private void AutoreToLvButton_Click(object sender, EventArgs e)
+        {
+            ListViewItem tempLVItem = new ListViewItem();
+
+            tempLVItem.Text = AutoriCombobox.SelectedItem.ToString(); ;
+            tempLVItem.Tag = AutoriCombobox.SelectedValue;
+
+            AutoriUlogeListView.Items.Add(tempLVItem);
+            int i = 0;
+            foreach (ListViewGroup grupa in AutoriUlogeListView.Groups)
+            {
+                if ((int)grupa.Tag==(int)UlogaComboBox.SelectedValue)
+                {
+                    grupa.Items.Add(tempLVItem);
+                    return;
+                }
+                i++;
+            }
+            AutoriUlogeListView.Groups.Add(UlogaComboBox.SelectedItem.ToString(), UlogaComboBox.SelectedItem.ToString()).Tag = UlogaComboBox.SelectedValue;
+            AutoriUlogeListView.Groups[i].Items.Add(tempLVItem);
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            List<UlogaAutoriInsertHelper> autoriInsertList = new List<UlogaAutoriInsertHelper>();
+
+            foreach (ListViewGroup grupa in AutoriUlogeListView.Groups)
+            {
+                foreach (ListViewItem item in grupa.Items)
+                {
+                    autoriInsertList.Add(
+                    new UlogaAutoriInsertHelper { KnjigaID = int.Parse(IDUrediTxtBox.Text), AutorID=(int)item.Tag, Uloga=(int)grupa.Tag }
+                    );
+                }
+            }
+
+            
+            DataAcces.InsertKnjigaAutorUloga(autoriInsertList);
         }
     }
 }

@@ -34,11 +34,17 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.OdjavaButton = new System.Windows.Forms.Button();
             this.ClanDataGridView = new System.Windows.Forms.DataGridView();
+            this.knjigaIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nazivDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.autoriDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.prevoditeljiDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.godinaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mjestoIzdavanjaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.izdavacDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.getAllKnjigeForIspisBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.knjiznicaDataSet = new KnjiznicaApp.KnjiznicaDataSet();
             this.IDUrediTxtBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.AutoriUlogeListView = new System.Windows.Forms.ListView();
-            this.AutorColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.UlogaColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label5 = new System.Windows.Forms.Label();
             this.UrediNazivTxtBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -48,22 +54,15 @@
             this.MjestoIzdavanjaTxtBox = new System.Windows.Forms.TextBox();
             this.IzdavacTxtBox = new System.Windows.Forms.TextBox();
             this.TraziButton = new System.Windows.Forms.Button();
-            this.knjiznicaDataSet = new KnjiznicaApp.KnjiznicaDataSet();
             this.getWhereNazivKnjigeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.getWhereNazivKnjigeTableAdapter = new KnjiznicaApp.KnjiznicaDataSetTableAdapters.GetWhereNazivKnjigeTableAdapter();
-            this.knjigaIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nazivDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.autoriDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.prevoditeljiDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.godinaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mjestoIzdavanjaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.izdavacDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.getAllKnjigeForIspisBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.getAllKnjigeForIspisTableAdapter = new KnjiznicaApp.KnjiznicaDataSetTableAdapters.GetAllKnjigeForIspisTableAdapter();
+            this.AutoriUlogeListView = new System.Windows.Forms.ListView();
+            this.AutorColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.ClanDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.knjiznicaDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.getWhereNazivKnjigeBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // TraziTxtBox
@@ -128,135 +127,6 @@
             this.ClanDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ClanDataGridView_CellContentClick);
             this.ClanDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ClanDataGridView_CellDoubleClick);
             // 
-            // IDUrediTxtBox
-            // 
-            this.IDUrediTxtBox.Enabled = false;
-            this.IDUrediTxtBox.Location = new System.Drawing.Point(799, 34);
-            this.IDUrediTxtBox.Name = "IDUrediTxtBox";
-            this.IDUrediTxtBox.Size = new System.Drawing.Size(144, 20);
-            this.IDUrediTxtBox.TabIndex = 20;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(772, 37);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(21, 13);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "ID:";
-            // 
-            // AutoriUlogeListView
-            // 
-            this.AutoriUlogeListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.AutorColumn,
-            this.UlogaColumn});
-            this.AutoriUlogeListView.HideSelection = false;
-            this.AutoriUlogeListView.Location = new System.Drawing.Point(772, 114);
-            this.AutoriUlogeListView.Name = "AutoriUlogeListView";
-            this.AutoriUlogeListView.Size = new System.Drawing.Size(295, 105);
-            this.AutoriUlogeListView.TabIndex = 18;
-            this.AutoriUlogeListView.UseCompatibleStateImageBehavior = false;
-            this.AutoriUlogeListView.View = System.Windows.Forms.View.Details;
-            // 
-            // AutorColumn
-            // 
-            this.AutorColumn.Text = "Autor";
-            this.AutorColumn.Width = 118;
-            // 
-            // UlogaColumn
-            // 
-            this.UlogaColumn.Text = "Uloga";
-            this.UlogaColumn.Width = 172;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(769, 72);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(68, 13);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "Naziv knjige:";
-            // 
-            // UrediNazivTxtBox
-            // 
-            this.UrediNazivTxtBox.Enabled = false;
-            this.UrediNazivTxtBox.Location = new System.Drawing.Point(843, 69);
-            this.UrediNazivTxtBox.Name = "UrediNazivTxtBox";
-            this.UrediNazivTxtBox.Size = new System.Drawing.Size(100, 20);
-            this.UrediNazivTxtBox.TabIndex = 11;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(769, 249);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 13);
-            this.label2.TabIndex = 21;
-            this.label2.Text = "Jezik:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(769, 288);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(89, 13);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "Mjesto izdavanja:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(769, 325);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(45, 13);
-            this.label6.TabIndex = 23;
-            this.label6.Text = "Izdavac";
-            // 
-            // JezikTextBox
-            // 
-            this.JezikTextBox.Location = new System.Drawing.Point(810, 249);
-            this.JezikTextBox.Name = "JezikTextBox";
-            this.JezikTextBox.Size = new System.Drawing.Size(100, 20);
-            this.JezikTextBox.TabIndex = 24;
-            // 
-            // MjestoIzdavanjaTxtBox
-            // 
-            this.MjestoIzdavanjaTxtBox.Location = new System.Drawing.Point(864, 285);
-            this.MjestoIzdavanjaTxtBox.Name = "MjestoIzdavanjaTxtBox";
-            this.MjestoIzdavanjaTxtBox.Size = new System.Drawing.Size(100, 20);
-            this.MjestoIzdavanjaTxtBox.TabIndex = 25;
-            // 
-            // IzdavacTxtBox
-            // 
-            this.IzdavacTxtBox.Location = new System.Drawing.Point(820, 322);
-            this.IzdavacTxtBox.Name = "IzdavacTxtBox";
-            this.IzdavacTxtBox.Size = new System.Drawing.Size(100, 20);
-            this.IzdavacTxtBox.TabIndex = 26;
-            // 
-            // TraziButton
-            // 
-            this.TraziButton.Location = new System.Drawing.Point(295, 4);
-            this.TraziButton.Name = "TraziButton";
-            this.TraziButton.Size = new System.Drawing.Size(75, 23);
-            this.TraziButton.TabIndex = 27;
-            this.TraziButton.Text = "Traži";
-            this.TraziButton.UseVisualStyleBackColor = true;
-            this.TraziButton.Click += new System.EventHandler(this.TraziButton_Click);
-            // 
-            // knjiznicaDataSet
-            // 
-            this.knjiznicaDataSet.DataSetName = "KnjiznicaDataSet";
-            this.knjiznicaDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // getWhereNazivKnjigeBindingSource
-            // 
-            this.getWhereNazivKnjigeBindingSource.DataMember = "GetWhereNazivKnjige";
-            this.getWhereNazivKnjigeBindingSource.DataSource = this.knjiznicaDataSet;
-            // 
-            // getWhereNazivKnjigeTableAdapter
-            // 
-            this.getWhereNazivKnjigeTableAdapter.ClearBeforeFill = true;
-            // 
             // knjigaIDDataGridViewTextBoxColumn
             // 
             this.knjigaIDDataGridViewTextBoxColumn.DataPropertyName = "KnjigaID";
@@ -311,15 +181,144 @@
             this.getAllKnjigeForIspisBindingSource.DataMember = "GetAllKnjigeForIspis";
             this.getAllKnjigeForIspisBindingSource.DataSource = this.knjiznicaDataSet;
             // 
+            // knjiznicaDataSet
+            // 
+            this.knjiznicaDataSet.DataSetName = "KnjiznicaDataSet";
+            this.knjiznicaDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // IDUrediTxtBox
+            // 
+            this.IDUrediTxtBox.Enabled = false;
+            this.IDUrediTxtBox.Location = new System.Drawing.Point(799, 34);
+            this.IDUrediTxtBox.Name = "IDUrediTxtBox";
+            this.IDUrediTxtBox.ReadOnly = true;
+            this.IDUrediTxtBox.Size = new System.Drawing.Size(144, 20);
+            this.IDUrediTxtBox.TabIndex = 20;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(772, 37);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(21, 13);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "ID:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(769, 72);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(68, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Naziv knjige:";
+            // 
+            // UrediNazivTxtBox
+            // 
+            this.UrediNazivTxtBox.Enabled = false;
+            this.UrediNazivTxtBox.Location = new System.Drawing.Point(843, 69);
+            this.UrediNazivTxtBox.Name = "UrediNazivTxtBox";
+            this.UrediNazivTxtBox.ReadOnly = true;
+            this.UrediNazivTxtBox.Size = new System.Drawing.Size(100, 20);
+            this.UrediNazivTxtBox.TabIndex = 11;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(772, 111);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.TabIndex = 21;
+            this.label2.Text = "Jezik:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(772, 150);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(89, 13);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Mjesto izdavanja:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(772, 187);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(45, 13);
+            this.label6.TabIndex = 23;
+            this.label6.Text = "Izdavac";
+            // 
+            // JezikTextBox
+            // 
+            this.JezikTextBox.Location = new System.Drawing.Point(813, 111);
+            this.JezikTextBox.Name = "JezikTextBox";
+            this.JezikTextBox.ReadOnly = true;
+            this.JezikTextBox.Size = new System.Drawing.Size(100, 20);
+            this.JezikTextBox.TabIndex = 24;
+            // 
+            // MjestoIzdavanjaTxtBox
+            // 
+            this.MjestoIzdavanjaTxtBox.Location = new System.Drawing.Point(867, 147);
+            this.MjestoIzdavanjaTxtBox.Name = "MjestoIzdavanjaTxtBox";
+            this.MjestoIzdavanjaTxtBox.ReadOnly = true;
+            this.MjestoIzdavanjaTxtBox.Size = new System.Drawing.Size(100, 20);
+            this.MjestoIzdavanjaTxtBox.TabIndex = 25;
+            // 
+            // IzdavacTxtBox
+            // 
+            this.IzdavacTxtBox.Location = new System.Drawing.Point(823, 184);
+            this.IzdavacTxtBox.Name = "IzdavacTxtBox";
+            this.IzdavacTxtBox.ReadOnly = true;
+            this.IzdavacTxtBox.Size = new System.Drawing.Size(100, 20);
+            this.IzdavacTxtBox.TabIndex = 26;
+            // 
+            // TraziButton
+            // 
+            this.TraziButton.Location = new System.Drawing.Point(295, 4);
+            this.TraziButton.Name = "TraziButton";
+            this.TraziButton.Size = new System.Drawing.Size(75, 23);
+            this.TraziButton.TabIndex = 27;
+            this.TraziButton.Text = "Traži";
+            this.TraziButton.UseVisualStyleBackColor = true;
+            this.TraziButton.Click += new System.EventHandler(this.TraziButton_Click);
+            // 
+            // getWhereNazivKnjigeBindingSource
+            // 
+            this.getWhereNazivKnjigeBindingSource.DataMember = "GetWhereNazivKnjige";
+            this.getWhereNazivKnjigeBindingSource.DataSource = this.knjiznicaDataSet;
+            // 
+            // getWhereNazivKnjigeTableAdapter
+            // 
+            this.getWhereNazivKnjigeTableAdapter.ClearBeforeFill = true;
+            // 
             // getAllKnjigeForIspisTableAdapter
             // 
             this.getAllKnjigeForIspisTableAdapter.ClearBeforeFill = true;
+            // 
+            // AutoriUlogeListView
+            // 
+            this.AutoriUlogeListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.AutorColumn});
+            this.AutoriUlogeListView.HideSelection = false;
+            this.AutoriUlogeListView.Location = new System.Drawing.Point(772, 229);
+            this.AutoriUlogeListView.Name = "AutoriUlogeListView";
+            this.AutoriUlogeListView.Size = new System.Drawing.Size(235, 311);
+            this.AutoriUlogeListView.TabIndex = 28;
+            this.AutoriUlogeListView.UseCompatibleStateImageBehavior = false;
+            this.AutoriUlogeListView.View = System.Windows.Forms.View.Details;
+            // 
+            // AutorColumn
+            // 
+            this.AutorColumn.Text = "Autor";
+            this.AutorColumn.Width = 231;
             // 
             // ClanForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1119, 639);
+            this.Controls.Add(this.AutoriUlogeListView);
             this.Controls.Add(this.TraziButton);
             this.Controls.Add(this.IzdavacTxtBox);
             this.Controls.Add(this.MjestoIzdavanjaTxtBox);
@@ -329,7 +328,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.IDUrediTxtBox);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.AutoriUlogeListView);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.UrediNazivTxtBox);
             this.Controls.Add(this.ClanDataGridView);
@@ -342,9 +340,9 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ClanForm_FormClosed);
             this.Load += new System.EventHandler(this.ClanForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ClanDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.knjiznicaDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.getWhereNazivKnjigeBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -358,9 +356,6 @@
         private System.Windows.Forms.DataGridView ClanDataGridView;
         private System.Windows.Forms.TextBox IDUrediTxtBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ListView AutoriUlogeListView;
-        private System.Windows.Forms.ColumnHeader AutorColumn;
-        private System.Windows.Forms.ColumnHeader UlogaColumn;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox UrediNazivTxtBox;
         private System.Windows.Forms.Label label2;
@@ -382,5 +377,7 @@
         private KnjiznicaDataSetTableAdapters.GetWhereNazivKnjigeTableAdapter getWhereNazivKnjigeTableAdapter;
         private System.Windows.Forms.BindingSource getAllKnjigeForIspisBindingSource;
         private KnjiznicaDataSetTableAdapters.GetAllKnjigeForIspisTableAdapter getAllKnjigeForIspisTableAdapter;
+        private System.Windows.Forms.ListView AutoriUlogeListView;
+        private System.Windows.Forms.ColumnHeader AutorColumn;
     }
 }

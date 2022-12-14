@@ -35,10 +35,9 @@
             this.AutoriCombobox = new System.Windows.Forms.ComboBox();
             this.UlogaComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.AutoreToLvButton = new System.Windows.Forms.Button();
             this.AutoriUlogeListView = new System.Windows.Forms.ListView();
             this.AutorColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.UlogaColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.UrediDataGridView = new System.Windows.Forms.DataGridView();
             this.knjigaIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nazivDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,7 +51,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.IDUrediTxtBox = new System.Windows.Forms.TextBox();
             this.DodajKnjiguButton = new System.Windows.Forms.Button();
-            this.UrediGodinaTxtBox = new System.Windows.Forms.TextBox();
             this.GodinaLabel = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -61,13 +59,24 @@
             this.TraziButton = new System.Windows.Forms.Button();
             this.getWhereNazivKnjigeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.getWhereNazivKnjigeTableAdapter = new KnjiznicaApp.KnjiznicaDataSetTableAdapters.GetWhereNazivKnjigeTableAdapter();
-            this.IzdavciComboboc = new System.Windows.Forms.ComboBox();
+            this.UrediIzdavaciCombiBoc = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.DeleteKnjiga = new System.Windows.Forms.Button();
+            this.GodinaUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.JezikComboBox = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.MjestoIzdavanjaComboBox = new System.Windows.Forms.ComboBox();
+            this.knjigaBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.knjigaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.UrediDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.knjiznicaDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.getWhereNazivKnjigeBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GodinaUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.knjigaBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.knjigaBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // UrediNazivTxtBox
@@ -89,7 +98,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(777, 108);
+            this.label2.Location = new System.Drawing.Point(778, 306);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(34, 13);
             this.label2.TabIndex = 2;
@@ -101,7 +110,7 @@
             this.AutoriCombobox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.AutoriCombobox.DisplayMember = "AutorID";
             this.AutoriCombobox.FormattingEnabled = true;
-            this.AutoriCombobox.Location = new System.Drawing.Point(777, 124);
+            this.AutoriCombobox.Location = new System.Drawing.Point(778, 322);
             this.AutoriCombobox.Name = "AutoriCombobox";
             this.AutoriCombobox.Size = new System.Drawing.Size(121, 21);
             this.AutoriCombobox.TabIndex = 3;
@@ -110,7 +119,7 @@
             // UlogaComboBox
             // 
             this.UlogaComboBox.FormattingEnabled = true;
-            this.UlogaComboBox.Location = new System.Drawing.Point(777, 168);
+            this.UlogaComboBox.Location = new System.Drawing.Point(778, 366);
             this.UlogaComboBox.Name = "UlogaComboBox";
             this.UlogaComboBox.Size = new System.Drawing.Size(121, 21);
             this.UlogaComboBox.TabIndex = 4;
@@ -118,30 +127,30 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(777, 152);
+            this.label3.Location = new System.Drawing.Point(778, 350);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 5;
             this.label3.Text = "Uloga";
             // 
-            // button1
+            // AutoreToLvButton
             // 
-            this.button1.Location = new System.Drawing.Point(913, 140);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(98, 36);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Dodaj";
-            this.button1.UseVisualStyleBackColor = true;
+            this.AutoreToLvButton.Location = new System.Drawing.Point(905, 338);
+            this.AutoreToLvButton.Name = "AutoreToLvButton";
+            this.AutoreToLvButton.Size = new System.Drawing.Size(98, 36);
+            this.AutoreToLvButton.TabIndex = 6;
+            this.AutoreToLvButton.Text = "Dodaj";
+            this.AutoreToLvButton.UseVisualStyleBackColor = true;
+            this.AutoreToLvButton.Click += new System.EventHandler(this.AutoreToLvButton_Click);
             // 
             // AutoriUlogeListView
             // 
             this.AutoriUlogeListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.AutorColumn,
-            this.UlogaColumn});
+            this.AutorColumn});
             this.AutoriUlogeListView.HideSelection = false;
-            this.AutoriUlogeListView.Location = new System.Drawing.Point(1017, 108);
+            this.AutoriUlogeListView.Location = new System.Drawing.Point(1019, 306);
             this.AutoriUlogeListView.Name = "AutoriUlogeListView";
-            this.AutoriUlogeListView.Size = new System.Drawing.Size(239, 81);
+            this.AutoriUlogeListView.Size = new System.Drawing.Size(239, 214);
             this.AutoriUlogeListView.TabIndex = 7;
             this.AutoriUlogeListView.UseCompatibleStateImageBehavior = false;
             this.AutoriUlogeListView.View = System.Windows.Forms.View.Details;
@@ -149,12 +158,7 @@
             // AutorColumn
             // 
             this.AutorColumn.Text = "Autor";
-            this.AutorColumn.Width = 118;
-            // 
-            // UlogaColumn
-            // 
-            this.UlogaColumn.Text = "Uloga";
-            this.UlogaColumn.Width = 172;
+            this.AutorColumn.Width = 231;
             // 
             // UrediDataGridView
             // 
@@ -260,20 +264,13 @@
             // 
             // DodajKnjiguButton
             // 
-            this.DodajKnjiguButton.Location = new System.Drawing.Point(859, 439);
+            this.DodajKnjiguButton.Location = new System.Drawing.Point(913, 177);
             this.DodajKnjiguButton.Name = "DodajKnjiguButton";
-            this.DodajKnjiguButton.Size = new System.Drawing.Size(75, 23);
+            this.DodajKnjiguButton.Size = new System.Drawing.Size(90, 38);
             this.DodajKnjiguButton.TabIndex = 11;
             this.DodajKnjiguButton.Text = "Dodaj Knjigu";
             this.DodajKnjiguButton.UseVisualStyleBackColor = true;
             this.DodajKnjiguButton.Click += new System.EventHandler(this.DodajKnjiguButton_Click);
-            // 
-            // UrediGodinaTxtBox
-            // 
-            this.UrediGodinaTxtBox.Location = new System.Drawing.Point(883, 85);
-            this.UrediGodinaTxtBox.Name = "UrediGodinaTxtBox";
-            this.UrediGodinaTxtBox.Size = new System.Drawing.Size(100, 20);
-            this.UrediGodinaTxtBox.TabIndex = 12;
             // 
             // GodinaLabel
             // 
@@ -332,18 +329,20 @@
             // 
             this.getWhereNazivKnjigeTableAdapter.ClearBeforeFill = true;
             // 
-            // IzdavciComboboc
+            // UrediIzdavaciCombiBoc
             // 
-            this.IzdavciComboboc.FormattingEnabled = true;
-            this.IzdavciComboboc.Location = new System.Drawing.Point(777, 222);
-            this.IzdavciComboboc.Name = "IzdavciComboboc";
-            this.IzdavciComboboc.Size = new System.Drawing.Size(121, 21);
-            this.IzdavciComboboc.TabIndex = 18;
+            this.UrediIzdavaciCombiBoc.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.UrediIzdavaciCombiBoc.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.UrediIzdavaciCombiBoc.FormattingEnabled = true;
+            this.UrediIzdavaciCombiBoc.Location = new System.Drawing.Point(777, 145);
+            this.UrediIzdavaciCombiBoc.Name = "UrediIzdavaciCombiBoc";
+            this.UrediIzdavaciCombiBoc.Size = new System.Drawing.Size(121, 21);
+            this.UrediIzdavaciCombiBoc.TabIndex = 18;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(774, 206);
+            this.label6.Location = new System.Drawing.Point(774, 129);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(48, 13);
             this.label6.TabIndex = 19;
@@ -351,34 +350,107 @@
             // 
             // DeleteKnjiga
             // 
-            this.DeleteKnjiga.Location = new System.Drawing.Point(954, 439);
+            this.DeleteKnjiga.Location = new System.Drawing.Point(723, 530);
             this.DeleteKnjiga.Name = "DeleteKnjiga";
-            this.DeleteKnjiga.Size = new System.Drawing.Size(75, 23);
+            this.DeleteKnjiga.Size = new System.Drawing.Size(99, 43);
             this.DeleteKnjiga.TabIndex = 20;
-            this.DeleteKnjiga.Text = "Izbrisi Knjigu";
+            this.DeleteKnjiga.Text = "Izbrisi Knjige";
             this.DeleteKnjiga.UseVisualStyleBackColor = true;
             this.DeleteKnjiga.Click += new System.EventHandler(this.DeleteKnjiga_Click);
+            // 
+            // GodinaUpDown
+            // 
+            this.GodinaUpDown.Location = new System.Drawing.Point(883, 85);
+            this.GodinaUpDown.Maximum = new decimal(new int[] {
+            2100,
+            0,
+            0,
+            0});
+            this.GodinaUpDown.Name = "GodinaUpDown";
+            this.GodinaUpDown.Size = new System.Drawing.Size(120, 20);
+            this.GodinaUpDown.TabIndex = 21;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(774, 171);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(34, 13);
+            this.label7.TabIndex = 23;
+            this.label7.Text = "Jezik:";
+            // 
+            // JezikComboBox
+            // 
+            this.JezikComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.JezikComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.JezikComboBox.FormattingEnabled = true;
+            this.JezikComboBox.Location = new System.Drawing.Point(777, 187);
+            this.JezikComboBox.Name = "JezikComboBox";
+            this.JezikComboBox.Size = new System.Drawing.Size(121, 21);
+            this.JezikComboBox.TabIndex = 22;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(774, 214);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(90, 13);
+            this.label8.TabIndex = 25;
+            this.label8.Text = "Mjesto Izdavanja:";
+            // 
+            // MjestoIzdavanjaComboBox
+            // 
+            this.MjestoIzdavanjaComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.MjestoIzdavanjaComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.MjestoIzdavanjaComboBox.FormattingEnabled = true;
+            this.MjestoIzdavanjaComboBox.Location = new System.Drawing.Point(777, 230);
+            this.MjestoIzdavanjaComboBox.Name = "MjestoIzdavanjaComboBox";
+            this.MjestoIzdavanjaComboBox.Size = new System.Drawing.Size(121, 21);
+            this.MjestoIzdavanjaComboBox.TabIndex = 24;
+            // 
+            // knjigaBindingSource
+            // 
+            this.knjigaBindingSource.DataSource = typeof(KnjiznicaApp.Knjiga);
+            // 
+            // knjigaBindingSource1
+            // 
+            this.knjigaBindingSource1.DataSource = typeof(KnjiznicaApp.Knjiga);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(927, 488);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(86, 31);
+            this.button1.TabIndex = 26;
+            this.button1.Text = "Dodaj Izabranoj";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // UrediKatalogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1270, 595);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.MjestoIzdavanjaComboBox);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.JezikComboBox);
+            this.Controls.Add(this.GodinaUpDown);
             this.Controls.Add(this.DeleteKnjiga);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.IzdavciComboboc);
+            this.Controls.Add(this.UrediIzdavaciCombiBoc);
             this.Controls.Add(this.TraziButton);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.TraziTxtBox);
             this.Controls.Add(this.GodinaLabel);
-            this.Controls.Add(this.UrediGodinaTxtBox);
             this.Controls.Add(this.DodajKnjiguButton);
             this.Controls.Add(this.IDUrediTxtBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.UrediDataGridView);
             this.Controls.Add(this.AutoriUlogeListView);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.AutoreToLvButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.UlogaComboBox);
             this.Controls.Add(this.AutoriCombobox);
@@ -392,6 +464,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.knjiznicaDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.getWhereNazivKnjigeBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GodinaUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.knjigaBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.knjigaBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -405,15 +480,13 @@
         private System.Windows.Forms.ComboBox AutoriCombobox;
         private System.Windows.Forms.ComboBox UlogaComboBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button AutoreToLvButton;
         private System.Windows.Forms.ListView AutoriUlogeListView;
         private System.Windows.Forms.DataGridView UrediDataGridView;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox IDUrediTxtBox;
         private System.Windows.Forms.ColumnHeader AutorColumn;
-        private System.Windows.Forms.ColumnHeader UlogaColumn;
         private System.Windows.Forms.Button DodajKnjiguButton;
-        private System.Windows.Forms.TextBox UrediGodinaTxtBox;
         private System.Windows.Forms.Label GodinaLabel;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label5;
@@ -431,8 +504,16 @@
         private System.Windows.Forms.Button TraziButton;
         private System.Windows.Forms.BindingSource getWhereNazivKnjigeBindingSource;
         private KnjiznicaDataSetTableAdapters.GetWhereNazivKnjigeTableAdapter getWhereNazivKnjigeTableAdapter;
-        private System.Windows.Forms.ComboBox IzdavciComboboc;
+        private System.Windows.Forms.ComboBox UrediIzdavaciCombiBoc;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button DeleteKnjiga;
+        private System.Windows.Forms.BindingSource knjigaBindingSource;
+        private System.Windows.Forms.BindingSource knjigaBindingSource1;
+        private System.Windows.Forms.NumericUpDown GodinaUpDown;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox JezikComboBox;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox MjestoIzdavanjaComboBox;
+        private System.Windows.Forms.Button button1;
     }
 }
