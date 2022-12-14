@@ -67,9 +67,10 @@
             this.JezikComboBox = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.MjestoIzdavanjaComboBox = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.knjigaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.knjigaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.UrediDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.knjiznicaDataSet)).BeginInit();
@@ -408,6 +409,16 @@
             this.MjestoIzdavanjaComboBox.Size = new System.Drawing.Size(121, 21);
             this.MjestoIzdavanjaComboBox.TabIndex = 24;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1019, 526);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(86, 31);
+            this.button1.TabIndex = 26;
+            this.button1.Text = "Dodaj Izabranoj";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // knjigaBindingSource
             // 
             this.knjigaBindingSource.DataSource = typeof(KnjiznicaApp.Knjiga);
@@ -416,21 +427,22 @@
             // 
             this.knjigaBindingSource1.DataSource = typeof(KnjiznicaApp.Knjiga);
             // 
-            // button1
+            // button2
             // 
-            this.button1.Location = new System.Drawing.Point(927, 488);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(86, 31);
-            this.button1.TabIndex = 26;
-            this.button1.Text = "Dodaj Izabranoj";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button2.Location = new System.Drawing.Point(1168, 526);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(90, 31);
+            this.button2.TabIndex = 27;
+            this.button2.Text = "Očisti";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // UrediKatalogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1270, 595);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.MjestoIzdavanjaComboBox);
@@ -458,7 +470,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.UrediNazivTxtBox);
             this.Name = "UrediKatalogForm";
-            this.Text = "Form2";
+            this.Text = "Knjižničar";
             this.Load += new System.EventHandler(this.UrediKatalogForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.UrediDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).EndInit();
@@ -515,5 +527,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox MjestoIzdavanjaComboBox;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }

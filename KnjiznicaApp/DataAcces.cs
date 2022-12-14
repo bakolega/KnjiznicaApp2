@@ -135,6 +135,16 @@ namespace KnjiznicaApp
             }
 
         }
+        static public void DeleteKnjigaAutorUloga(ID idsToDelete)
+        {
+            
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Execute("dbo.deleteKnjiga_Autor @forID", idsToDelete);
+               
+            }
+
+        }
     }
 }
  

@@ -236,5 +236,13 @@ namespace KnjiznicaApp
             
             DataAcces.InsertKnjigaAutorUloga(autoriInsertList);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            AutoriUlogeListView.Items.Clear();
+            AutoriUlogeListView.Groups.Clear();
+
+            DataAcces.DeleteKnjigaAutorUloga(new ID { forID = int.Parse(IDUrediTxtBox.Text) });
+        }
     }
 }

@@ -336,7 +336,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.TraziTxtBox);
             this.Name = "ClanForm";
-            this.Text = "User";
+            this.Text = "Član";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ClanForm_FormClosed);
             this.Load += new System.EventHandler(this.ClanForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ClanDataGridView)).EndInit();
