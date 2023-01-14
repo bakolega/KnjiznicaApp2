@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,9 +14,15 @@ namespace KnjiznicaApp
 {
     public partial class ClanForm : Form
     {
-        public ClanForm()
+        int IDClana;
+        string Username;
+        public ClanForm(int IDlogin, string UsernameClana)
         {
+            IDClana=IDlogin;
+            Username=UsernameClana;
+          
             InitializeComponent();
+            this.Text = Username + " ("+IDClana+")";
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -34,7 +41,7 @@ namespace KnjiznicaApp
 
         private void label1_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -58,7 +65,7 @@ namespace KnjiznicaApp
                 Informacije tempInfo = DataAcces.GetInformacije(tempID);// infomracije osim autora
 
                 UrediNazivTxtBox.Text = tempInfo.Naziv;
-                MjestoIzdavanjaTxtBox.Text = tempInfo.Izdavac;
+                IzdavacTxtBox.Text = tempInfo.Izdavac;
                 JezikTextBox.Text = tempInfo.Jezik;
                 MjestoIzdavanjaTxtBox.Text = tempInfo.Mjesto;
 
@@ -81,9 +88,20 @@ namespace KnjiznicaApp
                     }
                     i++;
                 }
+
+                //  kopijeDG.DataSource = DataAcces.getKopije(tempID);
+                kopijeDG.DataSource= DataAcces.GetKopije2(tempID);
+
+             //   this.kopijeDG.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+
+
             }
-            
+
         }
+
+      
+
 
         private void ClanForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -99,6 +117,38 @@ namespace KnjiznicaApp
         {
             this.getWhereNazivKnjigeTableAdapter.Fill(this.knjiznicaDataSet.GetWhereNazivKnjige, TraziTxtBox.Text);
             ClanDataGridView.DataSource = getWhereNazivKnjigeBindingSource;
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var senderGrid = (DataGridView)sender;
+
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+            {
+                MessageBox.Show("aa");
+            }
+
+        }
+
+        private void kopijeDG_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (kopijeDG.Columns[e.ColumnIndex].Name=="Dostupno")
+                
+                if (e.Value is 0)
+                {
+                    e.Value = "X";
+                    e.CellStyle.ForeColor= Color.Red;
+                    kopijeDG["Rezervacije", e.RowIndex].Value = "Rezerviraj";
+
+                }
+                else
+                {
+                    e.Value = "✓";
+                    e.CellStyle.ForeColor = Color.Green;
+                    DataGridViewTextBoxCell txtcell = new DataGridViewTextBoxCell();
+                    kopijeDG["Rezervacije", e.RowIndex] = txtcell;
+                }
+
         }
     }
 }

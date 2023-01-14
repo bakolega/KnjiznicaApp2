@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -142,6 +143,70 @@ namespace KnjiznicaApp
             {
                 connection.Execute("dbo.deleteKnjiga_Autor @forID", idsToDelete);
                
+            }
+
+        }
+
+        static public List<KopijaKnjige> GetKopije (int ID)
+        {
+            
+                        using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+                        {
+                            return connection.Query<KopijaKnjige>($"dbo.GetKopije @ID = {ID}").ToList();
+
+                        }
+          
+/*
+            SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica"));
+
+            SqlDataAdapter adp= new SqlDataAdapter($"dbo.GetKopije @ID = {ID}", conn);
+            DataTable data= new DataTable();
+            adp.Fill(data);
+            return data;
+*/
+        }
+
+        static public DataTable GetKopije2(int ID)
+        {
+                //Za id vraca sve kopije tog izdanja: ID, Lokacija, Dostupno [0/1]
+                using (SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
+            { 
+                SqlDataAdapter adp = new SqlDataAdapter($"dbo.GetKopije @ID = {ID}", conn);
+                DataTable data = new DataTable();
+                adp.Fill(data);
+    
+                return data;
+            }
+        }
+
+        static public int ClanLogin(string username, string lozinka)
+        {
+            //Za username i lozinku vraca ID korisnika ili -1 ako ne postoji/krivo
+
+            if (username == "" || lozinka == "")
+                return -1;
+            //Parametri
+
+            using (SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                //  SqlDataAdapter adp = new SqlDataAdapter($"dbo.LoginClan @User={username}, @Loz = {lozinka}", conn);
+                SqlDataAdapter adp = new SqlDataAdapter($"dbo.LoginClan @User={username}, @Loz = {lozinka}", conn);
+                DataTable data = new DataTable();
+
+
+                
+                adp.Fill(data);
+
+                if(data.Rows.Count == 0)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return (int)data.Rows[0][0];
+                }
+
+
             }
 
         }

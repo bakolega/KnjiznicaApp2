@@ -18,6 +18,11 @@ namespace KnjiznicaApp
         public int? JezikIDPar { get; set; }
 
     }
+    internal class KopijaKnjige
+    {
+        public int KopijaID { get; set; }
+        public string Lokacija { get; set; }
+    }
     internal class Uloga
     {
         public int UloagaID { get; set; }
@@ -96,7 +101,7 @@ namespace KnjiznicaApp
             foreach (string str in tempAutorID)
             {
                 string[] tempAutorSplit = str.Split(':');
-                tempAutori.Add(new Autor { AutorPrezimeIme = tempAutorSplit[0], AutorID = int.Parse(tempAutorSplit[1]) });
+                tempAutori.Add(new Autor { AutorPrezimeIme = tempAutorSplit[0].Trim(), AutorID = int.Parse(tempAutorSplit[1]) });
             }
             AutorIList = tempAutori;
         }

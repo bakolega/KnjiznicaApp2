@@ -54,10 +54,20 @@ namespace KnjiznicaApp
 
         private void OpenClFormButton_Click(object sender, EventArgs e)
         {
-            ClanForm ClForm = new ClanForm();
+
+            int idLogin= DataAcces.ClanLogin(UsernameTxtBox.Text, PasswordTxtBox.Text);
+            if(idLogin == -1)
+            {
+                MessageBox.Show("Krivo korisnicko ime ili lozinka");
+            }
+            else { 
+
+
+            ClanForm ClForm = new ClanForm(idLogin,UsernameTxtBox.Text);
             this.Hide();
             ClForm.ShowDialog();
             //this.Close();
+            }
         }
 
         private void OpenKnjFormButton_Click(object sender, EventArgs e)
@@ -66,6 +76,11 @@ namespace KnjiznicaApp
             this.Hide();
             KnjizForm.ShowDialog();
             //this.Close();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

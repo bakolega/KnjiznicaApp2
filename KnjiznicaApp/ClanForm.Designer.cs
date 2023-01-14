@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TraziTxtBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -59,10 +60,16 @@
             this.getAllKnjigeForIspisTableAdapter = new KnjiznicaApp.KnjiznicaDataSetTableAdapters.GetAllKnjigeForIspisTableAdapter();
             this.AutoriUlogeListView = new System.Windows.Forms.ListView();
             this.AutorColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.kopijeDG = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Lokacija = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Dostupno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rezervacije = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ClanDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.knjiznicaDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.getWhereNazivKnjigeBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kopijeDG)).BeginInit();
             this.SuspendLayout();
             // 
             // TraziTxtBox
@@ -95,9 +102,9 @@
             // 
             // OdjavaButton
             // 
-            this.OdjavaButton.Location = new System.Drawing.Point(1032, 604);
+            this.OdjavaButton.Location = new System.Drawing.Point(1432, 630);
             this.OdjavaButton.Name = "OdjavaButton";
-            this.OdjavaButton.Size = new System.Drawing.Size(75, 23);
+            this.OdjavaButton.Size = new System.Drawing.Size(115, 52);
             this.OdjavaButton.TabIndex = 4;
             this.OdjavaButton.Text = "Odjava";
             this.OdjavaButton.UseVisualStyleBackColor = true;
@@ -313,11 +320,64 @@
             this.AutorColumn.Text = "Autor";
             this.AutorColumn.Width = 231;
             // 
+            // kopijeDG
+            // 
+            this.kopijeDG.AllowUserToAddRows = false;
+            this.kopijeDG.AllowUserToDeleteRows = false;
+            this.kopijeDG.AllowUserToResizeRows = false;
+            this.kopijeDG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.kopijeDG.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
+            this.Lokacija,
+            this.Dostupno,
+            this.Rezervacije});
+            this.kopijeDG.Location = new System.Drawing.Point(1013, 173);
+            this.kopijeDG.MultiSelect = false;
+            this.kopijeDG.Name = "kopijeDG";
+            this.kopijeDG.ReadOnly = true;
+            this.kopijeDG.RowHeadersVisible = false;
+            this.kopijeDG.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.kopijeDG.ShowEditingIcon = false;
+            this.kopijeDG.Size = new System.Drawing.Size(412, 367);
+            this.kopijeDG.TabIndex = 29;
+            this.kopijeDG.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.kopijeDG.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.kopijeDG_CellFormatting);
+            // 
+            // ID
+            // 
+            this.ID.DataPropertyName = "ID";
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // Lokacija
+            // 
+            this.Lokacija.DataPropertyName = "Lokacija";
+            this.Lokacija.HeaderText = "Lokacija";
+            this.Lokacija.Name = "Lokacija";
+            this.Lokacija.ReadOnly = true;
+            // 
+            // Dostupno
+            // 
+            this.Dostupno.DataPropertyName = "Dostupno";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Dostupno.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Dostupno.HeaderText = "Dostupno";
+            this.Dostupno.Name = "Dostupno";
+            this.Dostupno.ReadOnly = true;
+            // 
+            // Rezervacije
+            // 
+            this.Rezervacije.HeaderText = "Rezervacije";
+            this.Rezervacije.Name = "Rezervacije";
+            this.Rezervacije.ReadOnly = true;
+            // 
             // ClanForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1119, 639);
+            this.ClientSize = new System.Drawing.Size(1559, 694);
+            this.Controls.Add(this.kopijeDG);
             this.Controls.Add(this.AutoriUlogeListView);
             this.Controls.Add(this.TraziButton);
             this.Controls.Add(this.IzdavacTxtBox);
@@ -343,6 +403,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.knjiznicaDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.getWhereNazivKnjigeBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kopijeDG)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -379,5 +440,10 @@
         private KnjiznicaDataSetTableAdapters.GetAllKnjigeForIspisTableAdapter getAllKnjigeForIspisTableAdapter;
         private System.Windows.Forms.ListView AutoriUlogeListView;
         private System.Windows.Forms.ColumnHeader AutorColumn;
+        private System.Windows.Forms.DataGridView kopijeDG;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Lokacija;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Dostupno;
+        private System.Windows.Forms.DataGridViewButtonColumn Rezervacije;
     }
 }

@@ -37,7 +37,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.AutoreToLvButton = new System.Windows.Forms.Button();
             this.AutoriUlogeListView = new System.Windows.Forms.ListView();
-            this.AutorColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.UrediDataGridView = new System.Windows.Forms.DataGridView();
             this.knjigaIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nazivDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,9 +67,10 @@
             this.label8 = new System.Windows.Forms.Label();
             this.MjestoIzdavanjaComboBox = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.knjigaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.knjigaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.UrediDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.knjiznicaDataSet)).BeginInit();
@@ -147,7 +147,8 @@
             // AutoriUlogeListView
             // 
             this.AutoriUlogeListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.AutorColumn});
+            this.columnHeader1});
+            this.AutoriUlogeListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.AutoriUlogeListView.HideSelection = false;
             this.AutoriUlogeListView.Location = new System.Drawing.Point(1019, 306);
             this.AutoriUlogeListView.Name = "AutoriUlogeListView";
@@ -155,11 +156,6 @@
             this.AutoriUlogeListView.TabIndex = 7;
             this.AutoriUlogeListView.UseCompatibleStateImageBehavior = false;
             this.AutoriUlogeListView.View = System.Windows.Forms.View.Details;
-            // 
-            // AutorColumn
-            // 
-            this.AutorColumn.Text = "Autor";
-            this.AutorColumn.Width = 231;
             // 
             // UrediDataGridView
             // 
@@ -419,14 +415,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // knjigaBindingSource
-            // 
-            this.knjigaBindingSource.DataSource = typeof(KnjiznicaApp.Knjiga);
-            // 
-            // knjigaBindingSource1
-            // 
-            this.knjigaBindingSource1.DataSource = typeof(KnjiznicaApp.Knjiga);
-            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(1168, 526);
@@ -436,6 +424,18 @@
             this.button2.Text = "Očisti";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 100;
+            // 
+            // knjigaBindingSource
+            // 
+            this.knjigaBindingSource.DataSource = typeof(KnjiznicaApp.Knjiga);
+            // 
+            // knjigaBindingSource1
+            // 
+            this.knjigaBindingSource1.DataSource = typeof(KnjiznicaApp.Knjiga);
             // 
             // UrediKatalogForm
             // 
@@ -497,7 +497,6 @@
         private System.Windows.Forms.DataGridView UrediDataGridView;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox IDUrediTxtBox;
-        private System.Windows.Forms.ColumnHeader AutorColumn;
         private System.Windows.Forms.Button DodajKnjiguButton;
         private System.Windows.Forms.Label GodinaLabel;
         private System.Windows.Forms.ComboBox comboBox1;
@@ -528,5 +527,6 @@
         private System.Windows.Forms.ComboBox MjestoIzdavanjaComboBox;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }
