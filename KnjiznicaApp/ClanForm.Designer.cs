@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TraziTxtBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -65,6 +65,7 @@
             this.Lokacija = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dostupno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Rezervacije = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ClanDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.knjiznicaDataSet)).BeginInit();
@@ -360,8 +361,8 @@
             // Dostupno
             // 
             this.Dostupno.DataPropertyName = "Dostupno";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Dostupno.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Dostupno.DefaultCellStyle = dataGridViewCellStyle4;
             this.Dostupno.HeaderText = "Dostupno";
             this.Dostupno.Name = "Dostupno";
             this.Dostupno.ReadOnly = true;
@@ -372,11 +373,22 @@
             this.Rezervacije.Name = "Rezervacije";
             this.Rezervacije.ReadOnly = true;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(12, 633);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(115, 50);
+            this.button1.TabIndex = 30;
+            this.button1.Text = "Posuđeno i rezervirano";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // ClanForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1559, 694);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.kopijeDG);
             this.Controls.Add(this.AutoriUlogeListView);
             this.Controls.Add(this.TraziButton);
@@ -445,5 +457,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Lokacija;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dostupno;
         private System.Windows.Forms.DataGridViewButtonColumn Rezervacije;
+        private System.Windows.Forms.Button button1;
     }
 }

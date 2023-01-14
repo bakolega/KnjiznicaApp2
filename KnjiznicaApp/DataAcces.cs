@@ -156,22 +156,14 @@ namespace KnjiznicaApp
 
                         }
           
-/*
-            SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica"));
-
-            SqlDataAdapter adp= new SqlDataAdapter($"dbo.GetKopije @ID = {ID}", conn);
-            DataTable data= new DataTable();
-            adp.Fill(data);
-            return data;
-*/
         }
 
-        static public DataTable GetKopije2(int ID)
+        static public DataTable GetKopije2(int ID, int clanID)
         {
-                //Za id vraca sve kopije tog izdanja: ID, Lokacija, Dostupno [0/1]
+                //Za id vraca sve kopije tog izdanja: ID, Lokacija, Dostupno: 1 / nedostupno:0, ovaj clan vec rezervirao -1 /-2 ovaj clan vec posudio
                 using (SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
             { 
-                SqlDataAdapter adp = new SqlDataAdapter($"dbo.GetKopije @ID = {ID}", conn);
+                SqlDataAdapter adp = new SqlDataAdapter($"dbo.GetKopije @ID = {ID}, @IDclana = {clanID}", conn);
                 DataTable data = new DataTable();
                 adp.Fill(data);
     
@@ -185,14 +177,13 @@ namespace KnjiznicaApp
 
             if (username == "" || lozinka == "")
                 return -1;
-            //Parametri
+        
 
             using (SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
             {
-                //  SqlDataAdapter adp = new SqlDataAdapter($"dbo.LoginClan @User={username}, @Loz = {lozinka}", conn);
+                
                 SqlDataAdapter adp = new SqlDataAdapter($"dbo.LoginClan @User={username}, @Loz = {lozinka}", conn);
                 DataTable data = new DataTable();
-
 
                 
                 adp.Fill(data);
@@ -210,6 +201,67 @@ namespace KnjiznicaApp
             }
 
         }
+
+        static public void InsertRezervacija(int kopijaID, int clanID)
+        {
+           
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.InsertRezervacija @kopijaID = {kopijaID}, @clanID ={clanID}");
+            }
+
+        }
+
+        static public DataTable GetPosudeno(int clanID)
+        {
+
+            using(SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                SqlDataAdapter adp = new SqlDataAdapter($"dbo.GetPosudeno @clanID = {clanID}", conn);
+                DataTable data = new DataTable();
+                adp.Fill(data);
+
+                return data;
+            }
+
+        }
+
+
+        static public void UpdateBrProduzenja(int posudbaID,int brProduzenja)
+        {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.UpdateBrProduzenja @BrProduzenja = {brProduzenja}, @PosudbaID= {posudbaID}");
+            }
+
+        }
+
+        static public DataTable GetRezervacije(int clanID)
+        {
+
+            using (SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                SqlDataAdapter adp = new SqlDataAdapter($"dbo.GetRezervacije @clanID = {clanID}", conn);
+                DataTable data = new DataTable();
+                adp.Fill(data);
+
+                return data;
+            }
+
+        }
+
+        static public void DeleteRezervacija(int idRezervacije)
+        {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.DeleteRezervacija @forID={idRezervacije}");
+
+            }
+
+        }
+
     }
 }
  

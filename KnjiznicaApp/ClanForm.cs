@@ -90,7 +90,8 @@ namespace KnjiznicaApp
                 }
 
                 //  kopijeDG.DataSource = DataAcces.getKopije(tempID);
-                kopijeDG.DataSource= DataAcces.GetKopije2(tempID);
+                kopijeDG.Tag = tempID;
+                kopijeDG.DataSource= DataAcces.GetKopije2(tempID, IDClana);
 
              //   this.kopijeDG.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
@@ -121,25 +122,44 @@ namespace KnjiznicaApp
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            //Provjerava je li kliknut botun i inserta rezervaciju, zatim ponovo updatea datagridView
             var senderGrid = (DataGridView)sender;
-
+           
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
-                MessageBox.Show("aa");
+                DataAcces.InsertRezervacija((int)kopijeDG["ID",e.RowIndex].Value, IDClana);
+
+                kopijeDG.DataSource = DataAcces.GetKopije2((int)kopijeDG.Tag, IDClana);
             }
+
 
         }
 
         private void kopijeDG_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (kopijeDG.Columns[e.ColumnIndex].Name=="Dostupno")
-                
+            //Formatira stupac dostupno i sukladno prikazuje botun; -1 znaci da je clan već rezervirao ovu kopiju
+            if (kopijeDG.Columns[e.ColumnIndex].Name == "Dostupno")
+            {
                 if (e.Value is 0)
                 {
                     e.Value = "X";
-                    e.CellStyle.ForeColor= Color.Red;
+                    e.CellStyle.ForeColor = Color.Red;
                     kopijeDG["Rezervacije", e.RowIndex].Value = "Rezerviraj";
 
+                }
+                else if (e.Value is -1)
+                {
+                    e.Value = "Rezervirano";
+                    e.CellStyle.ForeColor = Color.Black;
+                    DataGridViewTextBoxCell txtcell = new DataGridViewTextBoxCell();
+                    kopijeDG["Rezervacije", e.RowIndex] = txtcell;
+                }
+                else if (e.Value is -2)
+                {
+                    e.Value = "Posuđeno";
+                    e.CellStyle.ForeColor = Color.Black;
+                    DataGridViewTextBoxCell txtcell = new DataGridViewTextBoxCell();
+                    kopijeDG["Rezervacije", e.RowIndex] = txtcell;
                 }
                 else
                 {
@@ -148,7 +168,16 @@ namespace KnjiznicaApp
                     DataGridViewTextBoxCell txtcell = new DataGridViewTextBoxCell();
                     kopijeDG["Rezervacije", e.RowIndex] = txtcell;
                 }
-
+            }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ClanPosudenoForm clPosudeno= new ClanPosudenoForm(IDClana, Username);
+            //this.Hide();
+            clPosudeno.ShowDialog();
+        }
+
+
     }
 }
