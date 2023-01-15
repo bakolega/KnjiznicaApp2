@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.UrediKatalogButton = new System.Windows.Forms.Button();
             this.KnjiznicarDataGridView = new System.Windows.Forms.DataGridView();
             this.KnjigaID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,6 +57,12 @@
             this.Opcije = new System.Windows.Forms.DataGridViewButtonColumn();
             this.RezerviraniClan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PosudbaID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.searchIzborComboBox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.TraziTxtBox = new System.Windows.Forms.TextBox();
+            this.addKopija = new System.Windows.Forms.Button();
+            this.chooseLokacijaKopijeCBX = new System.Windows.Forms.ComboBox();
+            this.Clanovi = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.KnjiznicarDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kopijeDG)).BeginInit();
             this.SuspendLayout();
@@ -290,8 +296,8 @@
             // Dostupno
             // 
             this.Dostupno.DataPropertyName = "Dostupno";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Dostupno.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Dostupno.DefaultCellStyle = dataGridViewCellStyle2;
             this.Dostupno.HeaderText = "Dostupno";
             this.Dostupno.Name = "Dostupno";
             this.Dostupno.ReadOnly = true;
@@ -317,11 +323,75 @@
             this.PosudbaID.ReadOnly = true;
             this.PosudbaID.Visible = false;
             // 
+            // searchIzborComboBox
+            // 
+            this.searchIzborComboBox.FormattingEnabled = true;
+            this.searchIzborComboBox.Items.AddRange(new object[] {
+            "Katalog",
+            "Naziv",
+            "Autor",
+            "KnjigaID"});
+            this.searchIzborComboBox.Location = new System.Drawing.Point(323, 14);
+            this.searchIzborComboBox.Name = "searchIzborComboBox";
+            this.searchIzborComboBox.Size = new System.Drawing.Size(121, 21);
+            this.searchIzborComboBox.TabIndex = 43;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 13);
+            this.label1.TabIndex = 42;
+            this.label1.Text = "Pretraga";
+            // 
+            // TraziTxtBox
+            // 
+            this.TraziTxtBox.Location = new System.Drawing.Point(66, 14);
+            this.TraziTxtBox.Name = "TraziTxtBox";
+            this.TraziTxtBox.Size = new System.Drawing.Size(251, 20);
+            this.TraziTxtBox.TabIndex = 41;
+            this.TraziTxtBox.TextChanged += new System.EventHandler(this.TraziTxtBox_TextChanged);
+            // 
+            // addKopija
+            // 
+            this.addKopija.Location = new System.Drawing.Point(1129, 413);
+            this.addKopija.Name = "addKopija";
+            this.addKopija.Size = new System.Drawing.Size(75, 23);
+            this.addKopija.TabIndex = 44;
+            this.addKopija.Text = "Dodaj kopiju";
+            this.addKopija.UseVisualStyleBackColor = true;
+            this.addKopija.Click += new System.EventHandler(this.addKopija_Click);
+            // 
+            // chooseLokacijaKopijeCBX
+            // 
+            this.chooseLokacijaKopijeCBX.FormattingEnabled = true;
+            this.chooseLokacijaKopijeCBX.Location = new System.Drawing.Point(967, 413);
+            this.chooseLokacijaKopijeCBX.Name = "chooseLokacijaKopijeCBX";
+            this.chooseLokacijaKopijeCBX.Size = new System.Drawing.Size(156, 21);
+            this.chooseLokacijaKopijeCBX.TabIndex = 45;
+            // 
+            // Clanovi
+            // 
+            this.Clanovi.Location = new System.Drawing.Point(1279, 567);
+            this.Clanovi.Name = "Clanovi";
+            this.Clanovi.Size = new System.Drawing.Size(132, 73);
+            this.Clanovi.TabIndex = 46;
+            this.Clanovi.Text = "Clanovi";
+            this.Clanovi.UseVisualStyleBackColor = true;
+            this.Clanovi.Click += new System.EventHandler(this.Clanovi_Click);
+            // 
             // KnjiznicarForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1423, 646);
+            this.Controls.Add(this.Clanovi);
+            this.Controls.Add(this.chooseLokacijaKopijeCBX);
+            this.Controls.Add(this.addKopija);
+            this.Controls.Add(this.searchIzborComboBox);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.TraziTxtBox);
             this.Controls.Add(this.kopijeDG);
             this.Controls.Add(this.AutoriUlogeListView);
             this.Controls.Add(this.IzdavacTxtBox);
@@ -376,5 +446,11 @@
         private System.Windows.Forms.DataGridViewButtonColumn Opcije;
         private System.Windows.Forms.DataGridViewTextBoxColumn RezerviraniClan;
         private System.Windows.Forms.DataGridViewTextBoxColumn PosudbaID;
+        private System.Windows.Forms.ComboBox searchIzborComboBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox TraziTxtBox;
+        private System.Windows.Forms.Button addKopija;
+        private System.Windows.Forms.ComboBox chooseLokacijaKopijeCBX;
+        private System.Windows.Forms.Button Clanovi;
     }
 }

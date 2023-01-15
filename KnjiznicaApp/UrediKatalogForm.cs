@@ -22,13 +22,10 @@ namespace KnjiznicaApp
 
         private void UrediKatalogForm_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'knjiznicaDataSet.GetAllKnjigeForIspis' table. You can move, or remove it, as needed.
-            this.getAllKnjigeForIspisTableAdapter.Fill(this.knjiznicaDataSet.GetAllKnjigeForIspis);
+         
 
-            // UrediDataGridView.DataSource = DataAcces.getKnjigeIspis();
-
-            //List<Knjiga> tempkn= DataAcces.getKnjigeIspis();
-            // UrediDataGridView.DataSource= tempkn;
+            UrediDataGridView.DataSource = DataAcces.GetAllKnjige();
+            UrediDataGridView.ClearSelection();
 
             AutoriCombobox.DataSource = DataAcces.GetAutorPrezimeIme();
             AutoriCombobox.DisplayMember = "AutorPrezimeIme";
@@ -57,33 +54,18 @@ namespace KnjiznicaApp
             MjestoIzdavanjaComboBox.SelectedItem = null;
 
 
-        }
 
-        private void autorBindingSource_CurrentChanged(object sender, EventArgs e)
-        {
 
-        }
+            List<string> temp = new List<string>();
+            temp.Add("Katalog");
+            foreach (DataGridViewColumn item in UrediDataGridView.Columns)
+            {
+                temp.Add(item.Name);
+            }
 
-        private void getAutorPrezimeImeBindingSource1_CurrentChanged(object sender, EventArgs e)
-        {
+            searchIzborComboBox.DataSource = temp;
 
-        }
 
-        private void getAutorPrezimeImeBindingSource_CurrentChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void UrediDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-
-            
         }
 
         private void DodajKnjiguButton_Click(object sender, EventArgs e)
@@ -126,63 +108,12 @@ namespace KnjiznicaApp
             
             DataAcces.InsertKnjiga(UrediNazivTxtBox.Text, tempIzdavacID, (int)GodinaUpDown.Value, tempMjestoID, tempJezikID);
 
-            
-        }
+            UrediDataGridView.DataSource = DataAcces.GetAllKnjige();
 
-        private void UrediDataGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex > -1)
-            {
-                int tempID = (int)UrediDataGridView[0, e.RowIndex].Value;
-                
-                IDUrediTxtBox.Text = tempID.ToString();//Ispisi izabrani ID
-
-                Informacije tempInfo = DataAcces.GetInformacije(tempID);//Sve infomracije osim autora
-
-                UrediNazivTxtBox.Text = tempInfo.Naziv;
-                UrediIzdavaciCombiBoc.Text = tempInfo.Izdavac;
-                JezikComboBox.Text = tempInfo.Jezik;
-                MjestoIzdavanjaComboBox.Text = tempInfo.Mjesto;
-
-
-
-                //Ispisuje uloge autora na listviewu
-
-                AutoriUlogeListView.Items.Clear();
-                AutoriUlogeListView.Groups.Clear();
-
-              
-               
-                int i = 0;
-                foreach (UlogaAutoriv2 item in DataAcces.GetAutorUlogeForKnjigav2(tempID))
-                {
-                    AutoriUlogeListView.Groups.Add(item.UlogaNaziv, item.UlogaNaziv).Tag= item.UlogaID;
-                    foreach (Autor atr in item.AutorIList)
-                    {
-                        ListViewItem tempLVItem = new ListViewItem();
-                        tempLVItem.Text = atr.AutorPrezimeIme;
-                        tempLVItem.Tag = atr.AutorID;
-
-                        AutoriUlogeListView.Groups[i].Items.Add(tempLVItem);
-                        AutoriUlogeListView.Items.Add(tempLVItem);
-                    }
-                    i++;
-                }
-
-              
-            }
-        }
-
-        private void TraziButton_Click(object sender, EventArgs e)
-        {
-            this.getWhereNazivKnjigeTableAdapter.Fill(this.knjiznicaDataSet.GetWhereNazivKnjige,TraziTxtBox.Text);
-            UrediDataGridView.DataSource = getWhereNazivKnjigeBindingSource;
         }
 
         private void DeleteKnjiga_Click(object sender, EventArgs e)
         {
-            
-            //DataAcces.DeleteKnjiga(int.Parse(IDUrediTxtBox.Text));
 
             if (UrediDataGridView.SelectedRows.Count > 0)
             {
@@ -190,10 +121,15 @@ namespace KnjiznicaApp
                 List<ID> idsToDelete = new List<ID>();
                 foreach (DataGridViewRow row in UrediDataGridView.SelectedRows)
                 {
-                    idsToDelete.Add(new ID { forID = (int)row.Cells[0].Value });
+                    idsToDelete.Add(new ID { knjigaID = (int)row.Cells["KnjigaID"].Value });
                 }
                 DataAcces.DeleteKnjige(idsToDelete);
+
+
+                UrediDataGridView.DataSource = DataAcces.GetAllKnjige();
+                UrediDataGridView.ClearSelection();
             }
+
         }
 
         private void AutoreToLvButton_Click(object sender, EventArgs e)
@@ -242,7 +178,137 @@ namespace KnjiznicaApp
             AutoriUlogeListView.Items.Clear();
             AutoriUlogeListView.Groups.Clear();
 
-            DataAcces.DeleteKnjigaAutorUloga(new ID { forID = int.Parse(IDUrediTxtBox.Text) });
+            DataAcces.DeleteKnjigaAutorUloga(new ID { knjigaID = int.Parse(IDUrediTxtBox.Text) });
+        }
+
+        private void TraziTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            string tempSearch = searchIzborComboBox.Text;
+
+            if (tempSearch == "Katalog")
+            {
+                (UrediDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"Convert(knjigaID, 'System.String') like '%{TraziTxtBox.Text}%' OR [Naziv] like '%{TraziTxtBox.Text}%' OR [Autori] like '%{TraziTxtBox.Text}%' OR Convert([Godina], 'System.String') like '%{TraziTxtBox.Text}%' OR Convert([KnjigaID], 'System.String') like '%{TraziTxtBox.Text}%'");
+            }
+            else if (tempSearch == "KnjigaID" || tempSearch == "Godina")
+            {
+                (UrediDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"Convert([{tempSearch}], 'System.String') like '%{TraziTxtBox.Text}%'");
+            }
+            else
+            {
+                (UrediDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"[{tempSearch}] like '%{TraziTxtBox.Text}%'");
+            }
+        }
+
+        private void UrediDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                int tempID = (int)UrediDataGridView[0, e.RowIndex].Value;
+
+                IDUrediTxtBox.Text = tempID.ToString();//Ispisi izabrani ID
+
+                Informacije tempInfo = DataAcces.GetInformacije(tempID);//Sve infomracije osim autora
+
+                UrediNazivTxtBox.Text = tempInfo.Naziv;
+                UrediIzdavaciCombiBoc.Text = tempInfo.Izdavac;
+                JezikComboBox.Text = tempInfo.Jezik;
+                MjestoIzdavanjaComboBox.Text = tempInfo.Mjesto;
+
+
+
+                //Ispisuje uloge autora na listviewu
+
+                AutoriUlogeListView.Items.Clear();
+                AutoriUlogeListView.Groups.Clear();
+
+
+
+                int i = 0;
+                foreach (UlogaAutoriv2 item in DataAcces.GetAutorUlogeForKnjigav2(tempID))
+                {
+                    AutoriUlogeListView.Groups.Add(item.UlogaNaziv, item.UlogaNaziv).Tag = item.UlogaID;
+                    foreach (Autor atr in item.AutorIList)
+                    {
+                        ListViewItem tempLVItem = new ListViewItem();
+                        tempLVItem.Text = atr.AutorPrezimeIme;
+                        tempLVItem.Tag = atr.AutorID;
+
+                        AutoriUlogeListView.Groups[i].Items.Add(tempLVItem);
+                        AutoriUlogeListView.Items.Add(tempLVItem);
+                    }
+                    i++;
+                }
+
+
+            }
+        }
+
+        private void AddAutor_Click(object sender, EventArgs e)
+        {
+            AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos novog autora");
+
+            if (posudbaDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                string[] temp= posudbaDialog.unos.Split(',');
+
+                DataAcces.InsertAutor(temp[0].Trim(), temp[1].Trim());
+                AutoriCombobox.DataSource = DataAcces.GetAutorPrezimeIme();
+
+            }
+
+            posudbaDialog.Dispose();
+        }
+
+        private void AddUloga_Click(object sender, EventArgs e)
+        {
+            AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos nove uloge");
+
+            if (posudbaDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                
+
+                DataAcces.InsertUloga(posudbaDialog.unos);
+                UlogaComboBox.DataSource = DataAcces.GetUloge();
+
+            }
+
+            posudbaDialog.Dispose();
+        }
+
+        private void AddMjestoIzdavanja_Click(object sender, EventArgs e)
+        {
+            AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos novog mjesta izdavanja");
+
+            if (posudbaDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                DataAcces.InsertMjesto(posudbaDialog.unos);
+                MjestoIzdavanjaComboBox.DataSource = DataAcces.GetMjesta();
+            }
+            posudbaDialog.Dispose();
+        }
+
+        private void AddJezik_Click(object sender, EventArgs e)
+        {
+            AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos novog mjesta izdavanja");
+
+            if (posudbaDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                DataAcces.InsertJezik(posudbaDialog.unos);
+                JezikComboBox.DataSource = DataAcces.GetJezike();
+            }
+            posudbaDialog.Dispose();
+        }
+
+        private void AddIzdavac_Click(object sender, EventArgs e)
+        {
+            AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos novog mjesta izdavanja");
+
+            if (posudbaDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                DataAcces.InsertIzdavac(posudbaDialog.unos);
+                UrediIzdavaciCombiBoc.DataSource = DataAcces.GetIzdavaci();
+            }
+            posudbaDialog.Dispose();
         }
     }
 }

@@ -64,7 +64,7 @@ namespace KnjiznicaApp
 
     internal class ID
     {
-        public int forID { get; set; }
+        public int knjigaID { get; set; }
         
     }
 
@@ -111,6 +111,13 @@ namespace KnjiznicaApp
 
         public List<Autor> AutorIList { get; set; }
         
+    }
+
+    internal class Lokacija
+    {
+        public int LokacijaID { get; set; }
+        public string Naziv { get; set; }
+    
     }
 
 

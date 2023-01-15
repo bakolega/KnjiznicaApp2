@@ -29,6 +29,18 @@ namespace KnjiznicaApp
             KnjiznicarDataGridView.DataSource = DataAcces.GetAllKnjige();
             KnjiznicarDataGridView.ClearSelection();
 
+            List<string> temp = new List<string>();
+            temp.Add("Katalog");
+            foreach (DataGridViewColumn item in KnjiznicarDataGridView.Columns)
+            {
+                temp.Add(item.Name);
+            }
+
+            searchIzborComboBox.DataSource = temp;
+
+            chooseLokacijaKopijeCBX.DataSource = DataAcces.GetLokacije();
+            chooseLokacijaKopijeCBX.DisplayMember = "Naziv";
+            chooseLokacijaKopijeCBX.ValueMember = "LokacijaID";
         }
 
         private void KnjiznicarForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -145,14 +157,70 @@ namespace KnjiznicaApp
 
                     posudbaDialog.Dispose();
                 }
-                else if (senderGrid["Opcije", e.RowIndex].Value is "Povrat")
+                else if (senderGrid["Opcije", e.RowIndex].Value is "Povrat")//povrat, racuna zakasninu i prikazuje messagebox
                 {
-                    DataAcces.UpdatePovratakPosudbe((int)kopijeDG["PosudbaID", e.RowIndex].Value);
+                    DataTable temp =DataAcces.GetPosudbaZakasnjenje((int)kopijeDG["PosudbaID", e.RowIndex].Value);
+                    int br_produzenja= (int)temp.Rows[0]["Br_Produzenja"];
+                    DateTime datumPosudbe = Convert.ToDateTime(temp.Rows[0]["Dat_Posudbe"]);
+                    int daniZakasnjenja = (DateTime.Today - datumPosudbe.AddDays(21 * br_produzenja)).Days;
 
-                    kopijeDG.DataSource = DataAcces.GetKopijeKnjiznicar((int)kopijeDG.Tag);
+                    string poruka;
+                    if (daniZakasnjenja >0)
+                    {
+                        poruka = $"Zakasnina je {0.10*daniZakasnjenja}€ ({daniZakasnjenja} dana)";
+                    }
+                    else
+                    {
+                        poruka = "Nema zakasnine";
+                    }
 
+                    DialogResult dialogResult = MessageBox.Show(poruka, "Povrat", MessageBoxButtons.OKCancel);
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        DataAcces.UpdatePovratakPosudbe((int)kopijeDG["PosudbaID", e.RowIndex].Value);
+
+                        kopijeDG.DataSource = DataAcces.GetKopijeKnjiznicar((int)kopijeDG.Tag);
+                    }
+                    else if (dialogResult == DialogResult.No)
+                    {
+                        //do something else
+                    }
                 }
             }
+        }
+
+        private void TraziTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            string tempSearch = searchIzborComboBox.Text;
+
+            if (tempSearch == "Katalog")
+            {
+                (KnjiznicarDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"Convert(knjigaID, 'System.String') like '%{TraziTxtBox.Text}%' OR [Naziv] like '%{TraziTxtBox.Text}%' OR [Autori] like '%{TraziTxtBox.Text}%' OR Convert([Godina], 'System.String') like '%{TraziTxtBox.Text}%' OR Convert([KnjigaID], 'System.String') like '%{TraziTxtBox.Text}%'");
+            }
+            else if (tempSearch == "KnjigaID" || tempSearch == "Godina")
+            {
+                (KnjiznicarDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"Convert([{tempSearch}], 'System.String') like '%{TraziTxtBox.Text}%'");
+            }
+            else
+            {
+                (KnjiznicarDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"[{tempSearch}] like '%{TraziTxtBox.Text}%'");
+            }
+        }
+
+        private void addKopija_Click(object sender, EventArgs e)
+        {
+            if (kopijeDG.Tag != null)
+            {
+                DataAcces.InsertKopija((int)kopijeDG.Tag, (int)chooseLokacijaKopijeCBX.SelectedValue);
+                kopijeDG.DataSource = DataAcces.GetKopijeKnjiznicar((int)kopijeDG.Tag);
+
+            }
+        }
+
+        private void Clanovi_Click(object sender, EventArgs e)
+        {
+            PopisClanovaForm ClanoviForm = new PopisClanovaForm();
+            ClanoviForm.ShowDialog();
         }
     }
 }

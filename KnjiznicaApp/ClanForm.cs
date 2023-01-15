@@ -7,9 +7,11 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace KnjiznicaApp
@@ -30,6 +32,15 @@ namespace KnjiznicaApp
         {
             ClanDataGridView.DataSource = DataAcces.GetAllKnjige();
             ClanDataGridView.ClearSelection();
+
+            List<string> temp = new List<string>();
+            temp.Add("Katalog");
+            foreach (DataGridViewColumn item in ClanDataGridView.Columns)
+            {
+                temp.Add(item.Name);
+            }
+
+            searchIzborComboBox.DataSource = temp;
         }
 
 
@@ -94,12 +105,6 @@ namespace KnjiznicaApp
             InterForm.goback(this);
         }
 
-        private void TraziButton_Click(object sender, EventArgs e)
-        {
-            ClanDataGridView.DataSource = DataAcces.GetAllKnjige();
-        }
-
-
 
         private void kopijeDG_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -160,6 +165,22 @@ namespace KnjiznicaApp
             clPosudeno.ShowDialog();
         }
 
-        
+        private void TraziTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            string tempSearch = searchIzborComboBox.Text;
+
+            if (tempSearch == "Katalog")
+            {
+                (ClanDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"Convert(knjigaID, 'System.String') like '%{TraziTxtBox.Text}%' OR [Naziv] like '%{TraziTxtBox.Text}%' OR [Autori] like '%{TraziTxtBox.Text}%' OR Convert([Godina], 'System.String') like '%{TraziTxtBox.Text}%' OR Convert([KnjigaID], 'System.String') like '%{TraziTxtBox.Text}%'");
+            }
+            else if (tempSearch == "KnjigaID" || tempSearch == "Godina")
+            {
+                (ClanDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"Convert([{tempSearch}], 'System.String') like '%{TraziTxtBox.Text}%'");
+            }
+            else
+            {
+                (ClanDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"[{tempSearch}] like '%{TraziTxtBox.Text}%'");
+            }
+        }
     }
 }

@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddKatalogAtribute.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddKatalogAtribute.Designer.cs">
+      <DependentUpon>AddKatalogAtribute.cs</DependentUpon>
+    </Compile>
     <Compile Include="ClanPosudenoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +66,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>KnjiznicaDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PopisClanovaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PopisClanovaForm.Designer.cs">
+      <DependentUpon>PopisClanovaForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PosudbaForm.cs">
       <SubType>Form</SubType>
@@ -97,6 +109,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddKatalogAtribute.resx">
+      <DependentUpon>AddKatalogAtribute.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -106,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ClanPosudenoForm.resx">
       <DependentUpon>ClanPosudenoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PopisClanovaForm.resx">
+      <DependentUpon>PopisClanovaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PosudbaForm.resx">
       <DependentUpon>PosudbaForm.cs</DependentUpon>

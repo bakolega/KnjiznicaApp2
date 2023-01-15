@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Dapper;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+
 namespace KnjiznicaApp
 {
     internal class DataAcces
@@ -46,6 +49,17 @@ namespace KnjiznicaApp
             }
 
         }
+
+        static public List<Lokacija> GetLokacije()
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                return connection.Query<Lokacija>("Select * from Lokacija").ToList();
+            }
+
+        }
+
+
 
         static public int GetRezerviarniClan(int kopijaID)
         {
@@ -107,8 +121,11 @@ namespace KnjiznicaApp
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
             {
-                connection.Execute("dbo.deleteKnjiga_Autor @forID", IDs);
-                connection.Execute("dbo.DeleteKnjiga @forID", IDs);
+                connection.Execute("dbo.DeleteKopijeForknjiga @knjigaID", IDs);
+                connection.Execute("dbo.DeletePosudbeForKnjiga @knjigaID", IDs);
+                connection.Execute("dbo.DeleteRezervacijeForKnjiga @knjigaID", IDs);
+                connection.Execute("dbo.deleteKnjiga_Autor @knjigaID", IDs);
+                connection.Execute("dbo.DeleteKnjiga @knjigaID", IDs);
             }
 
         }
@@ -144,12 +161,12 @@ namespace KnjiznicaApp
             List<ID> idsToDelete = new List<ID>();
             foreach (UlogaAutoriInsertHelper item in input)
             {
-                idsToDelete.Add(new ID { forID = item.KnjigaID });
+                idsToDelete.Add(new ID { knjigaID = item.KnjigaID });
             }
 
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
             {
-                connection.Execute("dbo.deleteKnjiga_Autor @forID", idsToDelete);
+                connection.Execute("dbo.deleteKnjiga_Autor @knjigaID", idsToDelete);
                 connection.Execute("dbo.InsertKnjigaAutor @KnjigaID, @AutorID, @Uloga", input);
             }
 
@@ -159,7 +176,7 @@ namespace KnjiznicaApp
             
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
             {
-                connection.Execute("dbo.deleteKnjiga_Autor @forID", idsToDelete);
+                connection.Execute("dbo.deleteKnjiga_Autor @knjigaID", idsToDelete);
                
             }
 
@@ -175,16 +192,16 @@ namespace KnjiznicaApp
 
         }
 
-        static public List<KopijaKnjige> GetKopije (int ID)
-        {
+        //static public List<KopijaKnjige> GetKopije (int ID)
+        //{
             
-                        using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
-                        {
-                            return connection.Query<KopijaKnjige>($"dbo.GetKopije @ID = {ID}").ToList();
+        //                using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+        //                {
+        //                    return connection.Query<KopijaKnjige>($"dbo.GetKopije @ID = {ID}").ToList();
 
-                        }
+        //                }
           
-        }
+        //}
 
         static public DataTable GetKopije2(int ID, int clanID)
         {
@@ -292,6 +309,74 @@ namespace KnjiznicaApp
             }
 
         }
+        static public void InsertAutor(string ime,string prezime)
+        {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.InsertAutor @ime ='{ime}', @prezime ='{prezime}'");
+            }
+
+        }
+        static public void InsertUloga(string nazivUloge)
+        {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.InsertUloga @NazivUloge ='{nazivUloge}'");
+            }
+
+        }
+        static public void InsertMjesto(string mjestoNaziv)
+        {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.InsertMjesto @MjestoNaziv ='{mjestoNaziv}'");
+            }
+
+        }
+        static public void InsertJezik(string jezikNaziv)
+        {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.InsertJezik @jezikNaziv ='{jezikNaziv}'");
+            }
+
+        }
+
+        static public void InsertIzdavac(string izdavacNaziv)
+        {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.InsertIzdavac @izdavacNaziv ='{izdavacNaziv}'");
+            }
+
+        }
+
+        static public void InsertKopija(int kopijaID,int lokacijaID)
+        {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.InsertKopija @knjigaID ='{kopijaID}', @lokacijaID={lokacijaID}");
+            }
+
+        }
+
+        static public void InsertClan(string username,string lozinka,string ime,string prezime)
+        {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.InsertClan @username='{username}', @password='{lozinka}', @ime='{ime}', @prezime='{prezime}'");
+
+            }
+
+        }
+
         static public void UpdatePovratakPosudbe(int posudbaID)
         {
 
@@ -313,6 +398,18 @@ namespace KnjiznicaApp
                 DataTable data = new DataTable();
                 adp.Fill(data);
 
+                return data;
+            }
+
+        }
+        static public DataTable GetPosudbaZakasnjenje(int posudbaID)
+        {
+
+            using (SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                SqlDataAdapter adp = new SqlDataAdapter($"select Dat_Posudbe, Br_Produzenja from posudba where Posudba.PosudbaID = {posudbaID}", conn);
+                DataTable data = new DataTable();
+                adp.Fill(data);
                 return data;
             }
 
@@ -381,7 +478,21 @@ namespace KnjiznicaApp
             }
 
         }
-        
+
+        static public DataTable GetAllClanovi()
+        {
+
+            using (SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                SqlDataAdapter adp = new SqlDataAdapter("select ClanID,Username,Ime, Prezime from Clan", conn);
+                DataTable data = new DataTable();
+                adp.Fill(data);
+
+                return data;
+            }
+
+        }
+
 
     }
 }

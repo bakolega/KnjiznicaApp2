@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TraziTxtBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.searchIzborComboBox = new System.Windows.Forms.ComboBox();
@@ -51,7 +51,6 @@
             this.JezikTextBox = new System.Windows.Forms.TextBox();
             this.MjestoIzdavanjaTxtBox = new System.Windows.Forms.TextBox();
             this.IzdavacTxtBox = new System.Windows.Forms.TextBox();
-            this.TraziButton = new System.Windows.Forms.Button();
             this.AutoriUlogeListView = new System.Windows.Forms.ListView();
             this.AutorColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.kopijeDG = new System.Windows.Forms.DataGridView();
@@ -68,8 +67,9 @@
             // 
             this.TraziTxtBox.Location = new System.Drawing.Point(62, 6);
             this.TraziTxtBox.Name = "TraziTxtBox";
-            this.TraziTxtBox.Size = new System.Drawing.Size(100, 20);
+            this.TraziTxtBox.Size = new System.Drawing.Size(251, 20);
             this.TraziTxtBox.TabIndex = 1;
+            this.TraziTxtBox.TextChanged += new System.EventHandler(this.TraziTxtBox_TextChanged);
             // 
             // label1
             // 
@@ -83,11 +83,15 @@
             // searchIzborComboBox
             // 
             this.searchIzborComboBox.FormattingEnabled = true;
-            this.searchIzborComboBox.Location = new System.Drawing.Point(168, 6);
+            this.searchIzborComboBox.Items.AddRange(new object[] {
+            "Katalog",
+            "Naziv",
+            "Autor",
+            "KnjigaID"});
+            this.searchIzborComboBox.Location = new System.Drawing.Point(319, 6);
             this.searchIzborComboBox.Name = "searchIzborComboBox";
             this.searchIzborComboBox.Size = new System.Drawing.Size(121, 21);
             this.searchIzborComboBox.TabIndex = 3;
-            this.searchIzborComboBox.Text = "Katalog";
             // 
             // OdjavaButton
             // 
@@ -259,16 +263,6 @@
             this.IzdavacTxtBox.Size = new System.Drawing.Size(100, 20);
             this.IzdavacTxtBox.TabIndex = 26;
             // 
-            // TraziButton
-            // 
-            this.TraziButton.Location = new System.Drawing.Point(295, 4);
-            this.TraziButton.Name = "TraziButton";
-            this.TraziButton.Size = new System.Drawing.Size(75, 23);
-            this.TraziButton.TabIndex = 27;
-            this.TraziButton.Text = "Traži";
-            this.TraziButton.UseVisualStyleBackColor = true;
-            this.TraziButton.Click += new System.EventHandler(this.TraziButton_Click);
-            // 
             // AutoriUlogeListView
             // 
             this.AutoriUlogeListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -326,8 +320,8 @@
             // Dostupno
             // 
             this.Dostupno.DataPropertyName = "Dostupno";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Dostupno.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Dostupno.DefaultCellStyle = dataGridViewCellStyle8;
             this.Dostupno.HeaderText = "Dostupno";
             this.Dostupno.Name = "Dostupno";
             this.Dostupno.ReadOnly = true;
@@ -356,7 +350,6 @@
             this.Controls.Add(this.OpenPosudenoButton);
             this.Controls.Add(this.kopijeDG);
             this.Controls.Add(this.AutoriUlogeListView);
-            this.Controls.Add(this.TraziButton);
             this.Controls.Add(this.IzdavacTxtBox);
             this.Controls.Add(this.MjestoIzdavanjaTxtBox);
             this.Controls.Add(this.JezikTextBox);
@@ -399,7 +392,6 @@
         private System.Windows.Forms.TextBox JezikTextBox;
         private System.Windows.Forms.TextBox MjestoIzdavanjaTxtBox;
         private System.Windows.Forms.TextBox IzdavacTxtBox;
-        private System.Windows.Forms.Button TraziButton;
         private System.Windows.Forms.ListView AutoriUlogeListView;
         private System.Windows.Forms.ColumnHeader AutorColumn;
         private System.Windows.Forms.DataGridView kopijeDG;
