@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -113,9 +114,9 @@ namespace KnjiznicaApp
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
             {
-                connection.Execute("dbo.DeleteKopijeForknjiga @knjigaID", IDs);
                 connection.Execute("dbo.DeletePosudbeForKnjiga @knjigaID", IDs);
                 connection.Execute("dbo.DeleteRezervacijeForKnjiga @knjigaID", IDs);
+                connection.Execute("dbo.DeleteKopijeForknjiga @knjigaID", IDs);
                 connection.Execute("dbo.deleteKnjiga_Autor @knjigaID", IDs);
                 connection.Execute("dbo.DeleteKnjiga @knjigaID", IDs);
             }
@@ -142,8 +143,8 @@ namespace KnjiznicaApp
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
             {
-                 return connection.Query<UlogaAutoriv2>($"dbo.GetUlogeAutoriForKnjigav2 @IDfor = {ID}").ToList();
-          
+                 List<UlogaAutoriv2> temp =  connection.Query<UlogaAutoriv2>($"dbo.GetUlogeAutoriForKnjigav2 @IDfor = {ID}").ToList();
+                return temp;
             }
 
         }

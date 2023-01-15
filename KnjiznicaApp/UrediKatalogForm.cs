@@ -169,10 +169,12 @@ namespace KnjiznicaApp
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(IDUrediTxtBox.Text)) { 
             AutoriUlogeListView.Items.Clear();
             AutoriUlogeListView.Groups.Clear();
 
             DataAcces.DeleteKnjigaAutorUloga(new ID { knjigaID = int.Parse(IDUrediTxtBox.Text) });
+            }
         }
 
         private void TraziTxtBox_TextChanged(object sender, EventArgs e)
@@ -269,7 +271,7 @@ namespace KnjiznicaApp
 
         private void AddJezik_Click(object sender, EventArgs e)
         {
-            AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos novog mjesta izdavanja");
+            AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos novog jezika");
 
             if (posudbaDialog.ShowDialog(this) == DialogResult.OK && !string.IsNullOrEmpty(posudbaDialog.unos) )
             {
@@ -281,7 +283,7 @@ namespace KnjiznicaApp
 
         private void AddIzdavac_Click(object sender, EventArgs e)
         {
-            AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos novog mjesta izdavanja");
+            AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos novog izdavaca");
 
             if (posudbaDialog.ShowDialog(this) == DialogResult.OK && !string.IsNullOrEmpty(posudbaDialog.unos))
             {
