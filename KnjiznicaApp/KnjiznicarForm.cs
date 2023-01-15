@@ -56,8 +56,8 @@ namespace KnjiznicaApp
 
         private void KnjiznicarDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
-            if (e.RowIndex > -1)
+            
+            if (e.RowIndex > -1)//Izbjegava header
             {
                 int tempID = (int)KnjiznicarDataGridView["KnjigaID", e.RowIndex].Value;
                 IDUrediTxtBox.Text = tempID.ToString();//Ispisi izabrani ID
@@ -131,7 +131,7 @@ namespace KnjiznicaApp
         {
             var senderGrid = (DataGridView)sender;
 
-            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)//Ako je botun
             {
                 if (senderGrid["Opcije",e.RowIndex].Value is "Posudba")
                 {
@@ -157,40 +157,29 @@ namespace KnjiznicaApp
 
                     posudbaDialog.Dispose();
                 }
-                else if (senderGrid["Opcije", e.RowIndex].Value is "Povrat")//povrat, racuna zakasninu i prikazuje messagebox
+                else if (senderGrid["Opcije", e.RowIndex].Value is "Povrat")//povrat; racuna se eventualna zakasninq i prikazuje u messageboxu
                 {
-                    DataTable temp =DataAcces.GetPosudbaZakasnjenje((int)kopijeDG["PosudbaID", e.RowIndex].Value);
-                    int br_produzenja= (int)temp.Rows[0]["Br_Produzenja"];
-                    DateTime datumPosudbe = Convert.ToDateTime(temp.Rows[0]["Dat_Posudbe"]);
-                    int daniZakasnjenja = (DateTime.Today - datumPosudbe.AddDays(21 * br_produzenja)).Days;
+                    DataTable temp =DataAcces.GetPosudbaZakasnjenje((int)kopijeDG["PosudbaID", e.RowIndex].Value);//Dobija se datumm posdube i br produzenja
 
-                    string poruka;
-                    if (daniZakasnjenja >0)
-                    {
-                        poruka = $"Zakasnina je {0.10*daniZakasnjenja}€ ({daniZakasnjenja} dana)";
-                    }
-                    else
-                    {
-                        poruka = "Nema zakasnine";
-                    }
+                    string poruka = DodatneMetode.ispisIzracunZakansine(Convert.ToDateTime(temp.Rows[0]["Dat_Posudbe"]), (int)temp.Rows[0]["Br_Produzenja"]); //Racuna se i ispisuje u string zakasnina
 
                     DialogResult dialogResult = MessageBox.Show(poruka, "Povrat", MessageBoxButtons.OKCancel);
+
                     if (dialogResult == DialogResult.OK)
                     {
                         DataAcces.UpdatePovratakPosudbe((int)kopijeDG["PosudbaID", e.RowIndex].Value);
 
                         kopijeDG.DataSource = DataAcces.GetKopijeKnjiznicar((int)kopijeDG.Tag);
                     }
-                    else if (dialogResult == DialogResult.No)
-                    {
-                        //do something else
-                    }
+                   
                 }
             }
         }
 
         private void TraziTxtBox_TextChanged(object sender, EventArgs e)
         {
+
+            //pretraga
             string tempSearch = searchIzborComboBox.Text;
 
             if (tempSearch == "Katalog")

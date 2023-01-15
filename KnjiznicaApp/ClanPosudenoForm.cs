@@ -25,6 +25,7 @@ namespace KnjiznicaApp
         private void Form2_Load(object sender, EventArgs e)
         {
             PosudenoDG.DataSource = DataAcces.GetPosudeno(clanID);
+            PosudenoDG.ClearSelection();
             RezerviranoDG.DataSource=DataAcces.GetRezervacije(clanID);
         }
 
@@ -33,9 +34,10 @@ namespace KnjiznicaApp
             if (PosudenoDG.Columns[e.ColumnIndex].Name == "DatumVracanja")
             {
                 
-                int brProduzenja = (int)PosudenoDG["Br_Produzenja", e.RowIndex].Value+1;
-                DateTime rokPovratka = ((DateTime)PosudenoDG["Posudeno", e.RowIndex].Value).AddDays(21 * brProduzenja);
-                
+                int brProduzenja = (int)PosudenoDG["Br_Produzenja", e.RowIndex].Value;
+                DateTime datumPosudbe = (DateTime)PosudenoDG["Posudeno", e.RowIndex].Value;
+                DateTime rokPovratka = DodatneMetode.izracunRoka(datumPosudbe, brProduzenja);
+     
                 e.Value = rokPovratka.ToShortDateString();
 
                 //Ako je rok prosao pitura se u crveno i mice se botun
@@ -45,11 +47,17 @@ namespace KnjiznicaApp
 
                     DataGridViewTextBoxCell txtcell = new DataGridViewTextBoxCell();
                     PosudenoDG["Produzi", e.RowIndex] = txtcell;
+                    e.CellStyle.ForeColor= Color.Red;
+                    PosudenoDG["Zakasnina", e.RowIndex].Value =DodatneMetode.ispisIzracunZakansine(datumPosudbe, brProduzenja);
                 }
-                else if (brProduzenja > 2)
+                else if (brProduzenja >= DodatneMetode.dozvoljenoProduzenja)
                 {
                     DataGridViewTextBoxCell txtcell = new DataGridViewTextBoxCell();
                     PosudenoDG["Produzi", e.RowIndex] = txtcell;
+                }
+                else
+                {
+                    PosudenoDG["Produzi", e.RowIndex].Value = "+";
                 }
                 
             }

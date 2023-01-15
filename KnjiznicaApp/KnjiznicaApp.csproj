@@ -62,6 +62,7 @@
     <Compile Include="ClanPosudenoForm.Designer.cs">
       <DependentUpon>ClanPosudenoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DodatneMetode.cs" />
     <Compile Include="KnjiznicaDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
