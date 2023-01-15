@@ -109,14 +109,6 @@ namespace KnjiznicaApp
             }
 
         }
-        static public void DeleteKnjiga(int ID)
-        {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
-            {
-                 connection.Query($"dbo.DeleteKnjiga @forID={ID}");
-            }
-
-        }
         static public void DeleteKnjige(List<ID> IDs)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
@@ -191,17 +183,6 @@ namespace KnjiznicaApp
             }
 
         }
-
-        //static public List<KopijaKnjige> GetKopije (int ID)
-        //{
-            
-        //                using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
-        //                {
-        //                    return connection.Query<KopijaKnjige>($"dbo.GetKopije @ID = {ID}").ToList();
-
-        //                }
-          
-        //}
 
         static public DataTable GetKopije2(int ID, int clanID)
         {
@@ -309,12 +290,15 @@ namespace KnjiznicaApp
             }
 
         }
-        static public void InsertAutor(string ime,string prezime)
+        static public void InsertAutor(string im,string prez)
         {
+            AutortoAdd dodati = new AutortoAdd { ime = im, prezime = prez };
 
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
             {
-                connection.Query($"dbo.InsertAutor @ime ='{ime}', @prezime ='{prezime}'");
+               // connection.Query($"dbo.InsertAutor @ime ='{ime}' , @prezime ='{prezime}'");
+
+                connection.Execute("dbo.InsertAutor @ime, @prezime", dodati);
             }
 
         }

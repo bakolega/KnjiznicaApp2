@@ -24,8 +24,8 @@ namespace KnjiznicaApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(!(DodajUsernameTxb.Text=="" || DodajPasswordTxb.Text==""|| DodajImeTxb.Text==""||DodajPrezimeTxb.Text==""))
-                DataAcces.InsertClan(DodajUsernameTxb.Text,DodajPasswordTxb.Text,DodajImeTxb.Text,DodajPrezimeTxb.Text);
+            DodatneMetode.dodajKorisnika(DodajUsernameTxb.Text, DodajPasswordTxb.Text, DodajImeTxb.Text, DodajPrezimeTxb.Text);
+            PopisClanovaDGW.DataSource = DataAcces.GetAllClanovi();
         }
     }
 }

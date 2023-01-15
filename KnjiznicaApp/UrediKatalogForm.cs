@@ -53,17 +53,8 @@ namespace KnjiznicaApp
             MjestoIzdavanjaComboBox.ValueMember = "MjestoID";
             MjestoIzdavanjaComboBox.SelectedItem = null;
 
-
-
-
-            List<string> temp = new List<string>();
-            temp.Add("Katalog");
-            foreach (DataGridViewColumn item in UrediDataGridView.Columns)
-            {
-                temp.Add(item.Name);
-            }
-
-            searchIzborComboBox.DataSource = temp;
+            //"name" stupaca dodaje u comobox koji filtrira search
+            searchIzborComboBox.DataSource = DodatneMetode.GetListColumnNames(UrediDataGridView);
 
 
         }
@@ -76,7 +67,7 @@ namespace KnjiznicaApp
                 return;
             }
 
-            int? tempIzdavacID;//Ako je izabrano postojece salje se ID izavaca,ako nije -1 sta se pretvara u NULL u funkciji
+            int? tempIzdavacID;//Ako je izabrano postojece salje se ID izavaca int? je nullabilni int
             if (UrediIzdavaciCombiBoc.SelectedIndex > -1)
             {
                 tempIzdavacID = (int)UrediIzdavaciCombiBoc.SelectedValue;
@@ -157,6 +148,7 @@ namespace KnjiznicaApp
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //Dodaje autore sa LV u bazu
             List<UlogaAutoriInsertHelper> autoriInsertList = new List<UlogaAutoriInsertHelper>();
 
             foreach (ListViewGroup grupa in AutoriUlogeListView.Groups)
@@ -171,6 +163,8 @@ namespace KnjiznicaApp
 
             
             DataAcces.InsertKnjigaAutorUloga(autoriInsertList);
+            UrediDataGridView.DataSource = DataAcces.GetAllKnjige();
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -183,20 +177,9 @@ namespace KnjiznicaApp
 
         private void TraziTxtBox_TextChanged(object sender, EventArgs e)
         {
-            string tempSearch = searchIzborComboBox.Text;
-
-            if (tempSearch == "Katalog")
-            {
-                (UrediDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"Convert(knjigaID, 'System.String') like '%{TraziTxtBox.Text}%' OR [Naziv] like '%{TraziTxtBox.Text}%' OR [Autori] like '%{TraziTxtBox.Text}%' OR Convert([Godina], 'System.String') like '%{TraziTxtBox.Text}%' OR Convert([KnjigaID], 'System.String') like '%{TraziTxtBox.Text}%'");
-            }
-            else if (tempSearch == "KnjigaID" || tempSearch == "Godina")
-            {
-                (UrediDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"Convert([{tempSearch}], 'System.String') like '%{TraziTxtBox.Text}%'");
-            }
-            else
-            {
-                (UrediDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"[{tempSearch}] like '%{TraziTxtBox.Text}%'");
-            }
+            //Pretraga
+            (UrediDataGridView.DataSource as DataTable).DefaultView.RowFilter = DodatneMetode.FilterStringMaker(searchIzborComboBox.Text, TraziTxtBox.Text);
+     
         }
 
         private void UrediDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -221,37 +204,34 @@ namespace KnjiznicaApp
                 AutoriUlogeListView.Items.Clear();
                 AutoriUlogeListView.Groups.Clear();
 
-
-
-                int i = 0;
-                foreach (UlogaAutoriv2 item in DataAcces.GetAutorUlogeForKnjigav2(tempID))
-                {
-                    AutoriUlogeListView.Groups.Add(item.UlogaNaziv, item.UlogaNaziv).Tag = item.UlogaID;
-                    foreach (Autor atr in item.AutorIList)
-                    {
-                        ListViewItem tempLVItem = new ListViewItem();
-                        tempLVItem.Text = atr.AutorPrezimeIme;
-                        tempLVItem.Tag = atr.AutorID;
-
-                        AutoriUlogeListView.Groups[i].Items.Add(tempLVItem);
-                        AutoriUlogeListView.Items.Add(tempLVItem);
-                    }
-                    i++;
-                }
+                DodatneMetode.ispisiAutoreLV(DataAcces.GetAutorUlogeForKnjigav2(tempID), AutoriUlogeListView);
 
 
             }
         }
 
+        //Botuni za dodavanje novih autora, uloga, izdavac itd
+
         private void AddAutor_Click(object sender, EventArgs e)
         {
             AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos novog autora");
 
-            if (posudbaDialog.ShowDialog(this) == DialogResult.OK)
+            if (posudbaDialog.ShowDialog(this) == DialogResult.OK && !string.IsNullOrEmpty(posudbaDialog.unos))
             {
-                string[] temp= posudbaDialog.unos.Split(',');
-
-                DataAcces.InsertAutor(temp[0].Trim(), temp[1].Trim());
+                if (posudbaDialog.unos.Contains(","))
+                {
+                    string[] temp = posudbaDialog.unos.Split(new[] { ',' },2); //ako je vise od jednog zareza ovo ce i dalje splitat na samo 2 dila
+                    DataAcces.InsertAutor(temp[0].Trim(), temp[1].Trim());
+                }
+                else if(posudbaDialog.unos.Trim().Contains(" "))
+                {
+                    string[] temp = posudbaDialog.unos.Split(new[] { ' ' }, 2);//Ako ima razmak onda se uzima da je prva riječ ime ostalo prezime
+                    DataAcces.InsertAutor(temp[0].Trim(), temp[1].Trim());     //
+                }
+                else                                                           
+                {
+                    DataAcces.InsertAutor(posudbaDialog.unos,"");  //Ako nema razmaka ni zareza onda je samo ime
+                }
                 AutoriCombobox.DataSource = DataAcces.GetAutorPrezimeIme();
 
             }
@@ -263,11 +243,11 @@ namespace KnjiznicaApp
         {
             AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos nove uloge");
 
-            if (posudbaDialog.ShowDialog(this) == DialogResult.OK)
+            if (posudbaDialog.ShowDialog(this) == DialogResult.OK && !string.IsNullOrEmpty(posudbaDialog.unos))
             {
                 
 
-                DataAcces.InsertUloga(posudbaDialog.unos);
+                DataAcces.InsertUloga(posudbaDialog.unos.Trim());
                 UlogaComboBox.DataSource = DataAcces.GetUloge();
 
             }
@@ -279,9 +259,9 @@ namespace KnjiznicaApp
         {
             AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos novog mjesta izdavanja");
 
-            if (posudbaDialog.ShowDialog(this) == DialogResult.OK)
+            if (posudbaDialog.ShowDialog(this) == DialogResult.OK && !string.IsNullOrEmpty(posudbaDialog.unos))
             {
-                DataAcces.InsertMjesto(posudbaDialog.unos);
+                DataAcces.InsertMjesto(posudbaDialog.unos.Trim());
                 MjestoIzdavanjaComboBox.DataSource = DataAcces.GetMjesta();
             }
             posudbaDialog.Dispose();
@@ -291,9 +271,9 @@ namespace KnjiznicaApp
         {
             AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos novog mjesta izdavanja");
 
-            if (posudbaDialog.ShowDialog(this) == DialogResult.OK)
+            if (posudbaDialog.ShowDialog(this) == DialogResult.OK && !string.IsNullOrEmpty(posudbaDialog.unos) )
             {
-                DataAcces.InsertJezik(posudbaDialog.unos);
+                DataAcces.InsertJezik(posudbaDialog.unos.Trim());
                 JezikComboBox.DataSource = DataAcces.GetJezike();
             }
             posudbaDialog.Dispose();
@@ -303,9 +283,9 @@ namespace KnjiznicaApp
         {
             AddKatalogAtribute posudbaDialog = new AddKatalogAtribute("Unos novog mjesta izdavanja");
 
-            if (posudbaDialog.ShowDialog(this) == DialogResult.OK)
+            if (posudbaDialog.ShowDialog(this) == DialogResult.OK && !string.IsNullOrEmpty(posudbaDialog.unos))
             {
-                DataAcces.InsertIzdavac(posudbaDialog.unos);
+                DataAcces.InsertIzdavac(posudbaDialog.unos.Trim());
                 UrediIzdavaciCombiBoc.DataSource = DataAcces.GetIzdavaci();
             }
             posudbaDialog.Dispose();

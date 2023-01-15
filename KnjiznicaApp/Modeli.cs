@@ -18,11 +18,11 @@ namespace KnjiznicaApp
         public int? JezikIDPar { get; set; }
 
     }
-    internal class KopijaKnjige
-    {
-        public int KopijaID { get; set; }
-        public string Lokacija { get; set; }
-    }
+    //internal class KopijaKnjige
+    //{
+    //    public int KopijaID { get; set; }
+    //    public string Lokacija { get; set; }
+    //}
     internal class Uloga
     {
         public int UloagaID { get; set; }
@@ -78,6 +78,15 @@ namespace KnjiznicaApp
         {
             return AutorPrezimeIme;
         }
+    }
+
+    internal class AutortoAdd
+    {
+
+        public string ime { get; set; }
+        public string prezime { get; set; }
+
+       
     }
     internal class UlogaAutoriInsertHelper
     {

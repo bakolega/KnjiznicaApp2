@@ -32,15 +32,9 @@ namespace KnjiznicaApp
         {
             ClanDataGridView.DataSource = DataAcces.GetAllKnjige();
             ClanDataGridView.ClearSelection();
-
-            List<string> temp = new List<string>();
-            temp.Add("Katalog");
-            foreach (DataGridViewColumn item in ClanDataGridView.Columns)
-            {
-                temp.Add(item.Name);
-            }
-
-            searchIzborComboBox.DataSource = temp;
+            
+            //"name" stupaca dodaje u comobox koji filtrira search
+            searchIzborComboBox.DataSource = DodatneMetode.GetListColumnNames(ClanDataGridView);
         }
 
 
@@ -57,9 +51,6 @@ namespace KnjiznicaApp
                 int tempID = (int)ClanDataGridView["KnjigaID", e.RowIndex].Value;
                 IDUrediTxtBox.Text = tempID.ToString();//Ispisi izabrani ID
 
-               
-
-                
                 Informacije tempInfo = DataAcces.GetInformacije(tempID);// infomracije osim autora
 
                 UrediNazivTxtBox.Text = tempInfo.Naziv;
@@ -71,23 +62,11 @@ namespace KnjiznicaApp
                 AutoriUlogeListView.Items.Clear();
                 AutoriUlogeListView.Groups.Clear();
 
-                int i = 0;
-                foreach (UlogaAutoriv2 item in DataAcces.GetAutorUlogeForKnjigav2(tempID))
-                {
-                    AutoriUlogeListView.Groups.Add(item.UlogaNaziv, item.UlogaNaziv).Tag = item.UlogaID;
-                    foreach (Autor atr in item.AutorIList)
-                    {
-                        ListViewItem tempLVItem = new ListViewItem();
-                        tempLVItem.Text = atr.AutorPrezimeIme;
-                        tempLVItem.Tag = atr.AutorID;
+                //Ispsuje autore na lv
+                DodatneMetode.ispisiAutoreLV(DataAcces.GetAutorUlogeForKnjigav2(tempID),AutoriUlogeListView);
 
-                        AutoriUlogeListView.Groups[i].Items.Add(tempLVItem);
-                        AutoriUlogeListView.Items.Add(tempLVItem);
-                    }
-                    i++;
-                }
 
-          
+
                 kopijeDG.Tag = tempID;
                 kopijeDG.DataSource = DataAcces.GetKopije2(tempID, IDClana);
 
@@ -102,13 +81,14 @@ namespace KnjiznicaApp
 
         private void ClanForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            //Za vracanje na prijasnju login formu
             InterForm.goback(this);
         }
 
 
         private void kopijeDG_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            //Formatira stupac dostupno i stupac rezervacije. 
+            //Formatira stupac "dostupno" i na temelju njega stupac rezervacije; 0 - Nedostupno, -1 ovaj clan vec rezervirao, -2 ovaj clan vec posudio, 1 dostupno
             if (kopijeDG.Columns[e.ColumnIndex].Name == "Dostupno")
             {
                 if (e.Value is 0)
@@ -167,20 +147,8 @@ namespace KnjiznicaApp
 
         private void TraziTxtBox_TextChanged(object sender, EventArgs e)
         {
-            string tempSearch = searchIzborComboBox.Text;
+            (ClanDataGridView.DataSource as DataTable).DefaultView.RowFilter = DodatneMetode.FilterStringMaker(searchIzborComboBox.Text, TraziTxtBox.Text);
 
-            if (tempSearch == "Katalog")
-            {
-                (ClanDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"Convert(knjigaID, 'System.String') like '%{TraziTxtBox.Text}%' OR [Naziv] like '%{TraziTxtBox.Text}%' OR [Autori] like '%{TraziTxtBox.Text}%' OR Convert([Godina], 'System.String') like '%{TraziTxtBox.Text}%' OR Convert([KnjigaID], 'System.String') like '%{TraziTxtBox.Text}%'");
-            }
-            else if (tempSearch == "KnjigaID" || tempSearch == "Godina")
-            {
-                (ClanDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"Convert([{tempSearch}], 'System.String') like '%{TraziTxtBox.Text}%'");
-            }
-            else
-            {
-                (ClanDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"[{tempSearch}] like '%{TraziTxtBox.Text}%'");
-            }
         }
     }
 }

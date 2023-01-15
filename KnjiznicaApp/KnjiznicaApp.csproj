@@ -63,11 +63,6 @@
       <DependentUpon>ClanPosudenoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DodatneMetode.cs" />
-    <Compile Include="KnjiznicaDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KnjiznicaDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="PopisClanovaForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,17 +140,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="KnjiznicaDataSet.xsc">
-      <DependentUpon>KnjiznicaDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="KnjiznicaDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>KnjiznicaDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="KnjiznicaDataSet.xss">
-      <DependentUpon>KnjiznicaDataSet.xsd</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Knjiga.datasource" />
     <None Include="Properties\DataSources\KopijaKnjige.datasource" />

@@ -29,16 +29,6 @@
         private void InitializeComponent()
         {
             this.PosudenoDG = new System.Windows.Forms.DataGridView();
-            this.RezerviranoDG = new System.Windows.Forms.DataGridView();
-            this.NazivRez = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.KopijaIDRez = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LokacijaRezervacije = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Dostupno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Datum_Posudbe_Rez = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Dat_Vracanja = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BrRezervacijaIspred = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RezervacijaID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Otkaži = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Naziv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Lokacija = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,6 +38,16 @@
             this.Produzi = new System.Windows.Forms.DataGridViewButtonColumn();
             this.PosudbaID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Zakasnina = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RezerviranoDG = new System.Windows.Forms.DataGridView();
+            this.NazivRez = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.KopijaIDRez = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LokacijaRezervacije = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Dostupno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Datum_Posudbe_Rez = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Dat_Vracanja = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BrRezervacijaIspred = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RezervacijaID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Otkazi = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.PosudenoDG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RezerviranoDG)).BeginInit();
             this.SuspendLayout();
@@ -80,6 +80,70 @@
             this.PosudenoDG.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PosudenoDG_CellContentClick);
             this.PosudenoDG.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.PosudenoDG_CellFormatting);
             // 
+            // Naziv
+            // 
+            this.Naziv.DataPropertyName = "Naziv";
+            this.Naziv.HeaderText = "Naziv";
+            this.Naziv.Name = "Naziv";
+            this.Naziv.ReadOnly = true;
+            // 
+            // ID
+            // 
+            this.ID.DataPropertyName = "ID";
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // Lokacija
+            // 
+            this.Lokacija.DataPropertyName = "Lokacija";
+            this.Lokacija.HeaderText = "Lokacija";
+            this.Lokacija.Name = "Lokacija";
+            this.Lokacija.ReadOnly = true;
+            // 
+            // Posudeno
+            // 
+            this.Posudeno.DataPropertyName = "Dat_Posudbe";
+            this.Posudeno.HeaderText = "Posuđeno";
+            this.Posudeno.Name = "Posudeno";
+            this.Posudeno.ReadOnly = true;
+            // 
+            // DatumVracanja
+            // 
+            this.DatumVracanja.HeaderText = "Datum Povrata";
+            this.DatumVracanja.Name = "DatumVracanja";
+            this.DatumVracanja.ReadOnly = true;
+            // 
+            // Br_Produzenja
+            // 
+            this.Br_Produzenja.DataPropertyName = "Produzenja";
+            this.Br_Produzenja.HeaderText = "Broj Produženja";
+            this.Br_Produzenja.Name = "Br_Produzenja";
+            this.Br_Produzenja.ReadOnly = true;
+            // 
+            // Produzi
+            // 
+            this.Produzi.HeaderText = "Produži";
+            this.Produzi.Name = "Produzi";
+            this.Produzi.ReadOnly = true;
+            this.Produzi.Text = "Produži";
+            this.Produzi.Width = 45;
+            // 
+            // PosudbaID
+            // 
+            this.PosudbaID.DataPropertyName = "PosudbaID";
+            this.PosudbaID.HeaderText = "PosudbaID";
+            this.PosudbaID.Name = "PosudbaID";
+            this.PosudbaID.ReadOnly = true;
+            this.PosudbaID.Visible = false;
+            // 
+            // Zakasnina
+            // 
+            this.Zakasnina.HeaderText = "Zakasnina";
+            this.Zakasnina.Name = "Zakasnina";
+            this.Zakasnina.ReadOnly = true;
+            this.Zakasnina.Width = 130;
+            // 
             // RezerviranoDG
             // 
             this.RezerviranoDG.AllowUserToAddRows = false;
@@ -95,7 +159,7 @@
             this.Dat_Vracanja,
             this.BrRezervacijaIspred,
             this.RezervacijaID,
-            this.Otkaži});
+            this.Otkazi});
             this.RezerviranoDG.Location = new System.Drawing.Point(799, 11);
             this.RezerviranoDG.MultiSelect = false;
             this.RezerviranoDG.Name = "RezerviranoDG";
@@ -165,76 +229,12 @@
             this.RezervacijaID.ReadOnly = true;
             this.RezervacijaID.Visible = false;
             // 
-            // Otkaži
+            // Otkazi
             // 
-            this.Otkaži.HeaderText = "Otkaži";
-            this.Otkaži.Name = "Otkaži";
-            this.Otkaži.ReadOnly = true;
-            this.Otkaži.Text = "Otkaži";
-            // 
-            // Naziv
-            // 
-            this.Naziv.DataPropertyName = "Naziv";
-            this.Naziv.HeaderText = "Naziv";
-            this.Naziv.Name = "Naziv";
-            this.Naziv.ReadOnly = true;
-            // 
-            // ID
-            // 
-            this.ID.DataPropertyName = "ID";
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            // 
-            // Lokacija
-            // 
-            this.Lokacija.DataPropertyName = "Lokacija";
-            this.Lokacija.HeaderText = "Lokacija";
-            this.Lokacija.Name = "Lokacija";
-            this.Lokacija.ReadOnly = true;
-            // 
-            // Posudeno
-            // 
-            this.Posudeno.DataPropertyName = "Dat_Posudbe";
-            this.Posudeno.HeaderText = "Posuđeno";
-            this.Posudeno.Name = "Posudeno";
-            this.Posudeno.ReadOnly = true;
-            // 
-            // DatumVracanja
-            // 
-            this.DatumVracanja.HeaderText = "Datum Povrata";
-            this.DatumVracanja.Name = "DatumVracanja";
-            this.DatumVracanja.ReadOnly = true;
-            // 
-            // Br_Produzenja
-            // 
-            this.Br_Produzenja.DataPropertyName = "Produzenja";
-            this.Br_Produzenja.HeaderText = "Broj Produženja";
-            this.Br_Produzenja.Name = "Br_Produzenja";
-            this.Br_Produzenja.ReadOnly = true;
-            // 
-            // Produzi
-            // 
-            this.Produzi.HeaderText = "Produži";
-            this.Produzi.Name = "Produzi";
-            this.Produzi.ReadOnly = true;
-            this.Produzi.Text = "Produži";
-            this.Produzi.Width = 45;
-            // 
-            // PosudbaID
-            // 
-            this.PosudbaID.DataPropertyName = "PosudbaID";
-            this.PosudbaID.HeaderText = "PosudbaID";
-            this.PosudbaID.Name = "PosudbaID";
-            this.PosudbaID.ReadOnly = true;
-            this.PosudbaID.Visible = false;
-            // 
-            // Zakasnina
-            // 
-            this.Zakasnina.HeaderText = "Zakasnina";
-            this.Zakasnina.Name = "Zakasnina";
-            this.Zakasnina.ReadOnly = true;
-            this.Zakasnina.Width = 130;
+            this.Otkazi.HeaderText = "Otkaži";
+            this.Otkazi.Name = "Otkazi";
+            this.Otkazi.ReadOnly = true;
+            this.Otkazi.Text = "Otkaži";
             // 
             // ClanPosudenoForm
             // 
@@ -256,15 +256,6 @@
 
         private System.Windows.Forms.DataGridView PosudenoDG;
         private System.Windows.Forms.DataGridView RezerviranoDG;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NazivRez;
-        private System.Windows.Forms.DataGridViewTextBoxColumn KopijaIDRez;
-        private System.Windows.Forms.DataGridViewTextBoxColumn LokacijaRezervacije;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Dostupno;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Datum_Posudbe_Rez;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Dat_Vracanja;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BrRezervacijaIspred;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RezervacijaID;
-        private System.Windows.Forms.DataGridViewButtonColumn Otkaži;
         private System.Windows.Forms.DataGridViewTextBoxColumn Naziv;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn Lokacija;
@@ -274,5 +265,14 @@
         private System.Windows.Forms.DataGridViewButtonColumn Produzi;
         private System.Windows.Forms.DataGridViewTextBoxColumn PosudbaID;
         private System.Windows.Forms.DataGridViewTextBoxColumn Zakasnina;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NazivRez;
+        private System.Windows.Forms.DataGridViewTextBoxColumn KopijaIDRez;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LokacijaRezervacije;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Dostupno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Datum_Posudbe_Rez;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Dat_Vracanja;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BrRezervacijaIspred;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RezervacijaID;
+        private System.Windows.Forms.DataGridViewButtonColumn Otkazi;
     }
 }

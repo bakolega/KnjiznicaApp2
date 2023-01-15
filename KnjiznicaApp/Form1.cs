@@ -13,37 +13,9 @@ namespace KnjiznicaApp
 {
     public partial class Form1 : Form
     {
-        List<Knjiga> knjigaList = new List<Knjiga>();
-        //private void UpdateBind()
-        //{
-        //    KnjigeListView1.
-        //    KnjigeListView1.DisplayMember = "Display";//Germinal - Zola - 1885
-        //}
-
         public Form1()
         {
             InitializeComponent();
-
-            //UpdateBind();
-        }
-
-        private void ShowKnjigeButton_Click(object sender, EventArgs e)
-        {
-            //DataAcces baza = new DataAcces();
-            //knjigaList  = baza.getKnjige();
-            ////UpdateBind();
-            //LinkedList<ListViewItem> LVIlista = new LinkedList<ListViewItem>();
-
-            //foreach (Knjiga item in knjigaList)
-            //{
-            //    ListViewItem tempLVItem = new ListViewItem(item.Naziv.ToString());
-            //    tempLVItem.SubItems.Add(item.Autor);
-            //    tempLVItem.SubItems.Add(item.Godina.ToString());
-            //    tempLVItem.SubItems.Add(item.id.ToString());
-            //    LVIlista.AddLast(tempLVItem);
-            //}
-
-            //KnjigeListView1.Items.AddRange(LVIlista.ToArray());
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -54,39 +26,23 @@ namespace KnjiznicaApp
 
         private void OpenClFormButton_Click(object sender, EventArgs e)
         {
-
-            int idLogin= DataAcces.ClanLogin(UsernameTxtBox.Text, PasswordTxtBox.Text);
-            if(idLogin == -1)
-            {
-                MessageBox.Show("Krivo korisnicko ime ili lozinka");
-            }
-            else { 
-
-
-            ClanForm ClForm = new ClanForm(idLogin,UsernameTxtBox.Text);
-            this.Hide();
-            ClForm.ShowDialog();
-            //this.Close();
-            }
+            int idlogin = DodatneMetode.LoginClan(UsernameTxtBox.Text, PasswordTxtBox.Text);
+            if(idlogin > 0){
+                ClanForm ClForm = new ClanForm(idlogin, UsernameTxtBox.Text);
+                this.Hide();
+                ClForm.ShowDialog();
+            } 
         }
 
         private void OpenKnjFormButton_Click(object sender, EventArgs e)
         {
-
-            int idLogin = DataAcces.KnjiznicarLogin(UsernameTxtBox.Text, PasswordTxtBox.Text);
-            if (idLogin == -1)
+            int idlogin = DodatneMetode.LoginKnjiznicar(UsernameTxtBox.Text, PasswordTxtBox.Text);
+            if (idlogin > 0)
             {
-                MessageBox.Show("Krivo korisnicko ime ili lozinka");
-            }
-            else
-            {
-
-                KnjiznicarForm KnjizForm = new KnjiznicarForm(idLogin, UsernameTxtBox.Text);
+                KnjiznicarForm KnjizForm = new KnjiznicarForm(idlogin, UsernameTxtBox.Text);
                 this.Hide();
                 KnjizForm.ShowDialog();
-                //this.Close();
             }
-
 
         }
     }

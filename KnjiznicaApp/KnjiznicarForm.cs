@@ -29,14 +29,14 @@ namespace KnjiznicaApp
             KnjiznicarDataGridView.DataSource = DataAcces.GetAllKnjige();
             KnjiznicarDataGridView.ClearSelection();
 
-            List<string> temp = new List<string>();
-            temp.Add("Katalog");
-            foreach (DataGridViewColumn item in KnjiznicarDataGridView.Columns)
-            {
-                temp.Add(item.Name);
-            }
+            //List<string> temp = new List<string>();
+            //temp.Add("Katalog");
+            //foreach (DataGridViewColumn item in KnjiznicarDataGridView.Columns)
+            //{
+            //    temp.Add(item.Name);
+            //}
 
-            searchIzborComboBox.DataSource = temp;
+            searchIzborComboBox.DataSource = DodatneMetode.GetListColumnNames(KnjiznicarDataGridView);
 
             chooseLokacijaKopijeCBX.DataSource = DataAcces.GetLokacije();
             chooseLokacijaKopijeCBX.DisplayMember = "Naziv";
@@ -73,22 +73,8 @@ namespace KnjiznicaApp
                 AutoriUlogeListView.Items.Clear();
                 AutoriUlogeListView.Groups.Clear();
 
-                int i = 0;
-                foreach (UlogaAutoriv2 item in DataAcces.GetAutorUlogeForKnjigav2(tempID))
-                {
-                    AutoriUlogeListView.Groups.Add(item.UlogaNaziv, item.UlogaNaziv).Tag = item.UlogaID;
-                    foreach (Autor atr in item.AutorIList)
-                    {
-                        ListViewItem tempLVItem = new ListViewItem();
-                        tempLVItem.Text = atr.AutorPrezimeIme;
-                        tempLVItem.Tag = atr.AutorID;
-
-                        AutoriUlogeListView.Groups[i].Items.Add(tempLVItem);
-                        AutoriUlogeListView.Items.Add(tempLVItem);
-                    }
-                    i++;
-                }
-
+                //Ispisuje  na LV
+                DodatneMetode.ispisiAutoreLV(DataAcces.GetAutorUlogeForKnjigav2(tempID), AutoriUlogeListView);
 
                 kopijeDG.Tag = tempID;
                 kopijeDG.DataSource = DataAcces.GetKopijeKnjiznicar(tempID);
@@ -133,23 +119,22 @@ namespace KnjiznicaApp
 
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)//Ako je botun
             {
-                if (senderGrid["Opcije",e.RowIndex].Value is "Posudba")
+                if (senderGrid["Opcije",e.RowIndex].Value is "Posudba")//Ako je posudba
                 {
                     int tempID = 0;
                     int kopijaIDtemp = (int)senderGrid["ID", e.RowIndex].Value;
                     if ((int)senderGrid["Dostupno", e.RowIndex].Value == 0)//formatirano 0 se PRIKAZUJE kao "Rezervirano" ali vrijednost ostaje 0!!!
-                        tempID = DataAcces.GetRezerviarniClan(kopijaIDtemp);
+                        tempID = DataAcces.GetRezerviarniClan(kopijaIDtemp);//ako je rezerviarno uzimamo ID clana koji je rezervirao. GetRezerviarniClan vraca prvog u redu
 
-                    PosudbaForm posudbaDialog = new PosudbaForm(tempID);
+                    PosudbaForm posudbaDialog = new PosudbaForm(tempID); //Ako je rezervirano ID nece biti 0 pa ce se taj clan postaviti kao prvi izbor
 
-                    if (posudbaDialog.ShowDialog(this) == DialogResult.OK)
+                    if (posudbaDialog.ShowDialog(this) == DialogResult.OK)//otvara se dialog, ako je OK inserta se posudba
                     {
-
                         DataAcces.InsertPosudba(kopijaIDtemp, posudbaDialog.clanIDPosudba, IDKnjiznicar);
 
-                        kopijeDG.DataSource = DataAcces.GetKopijeKnjiznicar((int)kopijeDG.Tag);
+                        kopijeDG.DataSource = DataAcces.GetKopijeKnjiznicar((int)kopijeDG.Tag);//updatea se DGV
 
-                        if (tempID != 0) 
+                        if (tempID != 0) //Ako bilo rezervirano brise se rezervacija
                         {
                             DataAcces.DeleteRezervacijaForKopija(kopijaIDtemp, posudbaDialog.clanIDPosudba);
                         }
@@ -157,15 +142,15 @@ namespace KnjiznicaApp
 
                     posudbaDialog.Dispose();
                 }
-                else if (senderGrid["Opcije", e.RowIndex].Value is "Povrat")//povrat; racuna se eventualna zakasninq i prikazuje u messageboxu
+                else if (senderGrid["Opcije", e.RowIndex].Value is "Povrat")//povrat; racuna se eventualna zakasnina i prikazuje u messageboxu
                 {
                     DataTable temp =DataAcces.GetPosudbaZakasnjenje((int)kopijeDG["PosudbaID", e.RowIndex].Value);//Dobija se datumm posdube i br produzenja
 
                     string poruka = DodatneMetode.ispisIzracunZakansine(Convert.ToDateTime(temp.Rows[0]["Dat_Posudbe"]), (int)temp.Rows[0]["Br_Produzenja"]); //Racuna se i ispisuje u string zakasnina
 
-                    DialogResult dialogResult = MessageBox.Show(poruka, "Povrat", MessageBoxButtons.OKCancel);
+                    DialogResult dialogResult = MessageBox.Show(poruka, "Povrat", MessageBoxButtons.OKCancel); //Prikazuje se ima li tj kolika je zakasnina
 
-                    if (dialogResult == DialogResult.OK)
+                    if (dialogResult == DialogResult.OK)//Ako je ok u bazi se dodaje datum povratka, ako nije ništa!
                     {
                         DataAcces.UpdatePovratakPosudbe((int)kopijeDG["PosudbaID", e.RowIndex].Value);
 
@@ -178,26 +163,13 @@ namespace KnjiznicaApp
 
         private void TraziTxtBox_TextChanged(object sender, EventArgs e)
         {
-
-            //pretraga
-            string tempSearch = searchIzborComboBox.Text;
-
-            if (tempSearch == "Katalog")
-            {
-                (KnjiznicarDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"Convert(knjigaID, 'System.String') like '%{TraziTxtBox.Text}%' OR [Naziv] like '%{TraziTxtBox.Text}%' OR [Autori] like '%{TraziTxtBox.Text}%' OR Convert([Godina], 'System.String') like '%{TraziTxtBox.Text}%' OR Convert([KnjigaID], 'System.String') like '%{TraziTxtBox.Text}%'");
-            }
-            else if (tempSearch == "KnjigaID" || tempSearch == "Godina")
-            {
-                (KnjiznicarDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"Convert([{tempSearch}], 'System.String') like '%{TraziTxtBox.Text}%'");
-            }
-            else
-            {
-                (KnjiznicarDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format($"[{tempSearch}] like '%{TraziTxtBox.Text}%'");
-            }
+            //search
+            (KnjiznicarDataGridView.DataSource as DataTable).DefaultView.RowFilter = DodatneMetode.FilterStringMaker(searchIzborComboBox.Text, TraziTxtBox.Text);
         }
 
         private void addKopija_Click(object sender, EventArgs e)
         {
+            //Dodaje se kopija izabrane knjige, ako nekako nije izabrana lokacija, ništa!
             if (kopijeDG.Tag != null)
             {
                 DataAcces.InsertKopija((int)kopijeDG.Tag, (int)chooseLokacijaKopijeCBX.SelectedValue);
@@ -208,6 +180,7 @@ namespace KnjiznicaApp
 
         private void Clanovi_Click(object sender, EventArgs e)
         {
+            //Otvara se popis clanova
             PopisClanovaForm ClanoviForm = new PopisClanovaForm();
             ClanoviForm.ShowDialog();
         }
