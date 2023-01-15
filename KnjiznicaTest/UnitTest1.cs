@@ -1,7 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using KnjiznicaApp;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using KnjiznicaApp;
-using System.Security.Principal;
 
 namespace KnjiznicaTest
 {
@@ -11,12 +10,12 @@ namespace KnjiznicaTest
         [TestMethod]
         public void TestIzracunZakansine1()
         {
-            DateTime date= DateTime.Now.AddDays(-21);
+            DateTime date = DateTime.Now.AddDays(-21);
             int produzenja = 0;
 
             string rezultat = DodatneMetode.ispisIzracunZakansine(date, produzenja);
 
-            Assert.AreEqual("Nema zakasnine",rezultat);
+            Assert.AreEqual("Nema zakasnine", rezultat);
 
             date = DateTime.Now.AddDays(-22);
 
@@ -40,12 +39,12 @@ namespace KnjiznicaTest
         [TestMethod]
         public void TestIzracunRoka()
         {
-            DateTime date = new DateTime(2000,1,1);
+            DateTime date = new DateTime(2000, 1, 1);
             int produzenja = 0;
 
             DateTime rezultat = DodatneMetode.izracunRoka(date, produzenja);
 
-            Assert.AreEqual(new DateTime(2000,1,22), rezultat);
+            Assert.AreEqual(new DateTime(2000, 1, 22), rezultat);
         }
 
         [TestMethod]

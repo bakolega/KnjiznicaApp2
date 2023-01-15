@@ -28,7 +28,7 @@ namespace KnjiznicaApp
             PosudenoDG.ClearSelection();
             RezerviranoDG.DataSource=DataAcces.GetRezervacije(clanID);
 
-            this.Text = username + "Posuđeno";
+            this.Text = username + " Posuđeno";
         }
 
         private void PosudenoDG_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

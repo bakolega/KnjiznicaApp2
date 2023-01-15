@@ -149,6 +149,7 @@ namespace KnjiznicaApp
         private void button1_Click(object sender, EventArgs e)
         {
             //Dodaje autore sa LV u bazu
+            if (!string.IsNullOrEmpty(IDUrediTxtBox.Text)){ 
             List<UlogaAutoriInsertHelper> autoriInsertList = new List<UlogaAutoriInsertHelper>();
 
             foreach (ListViewGroup grupa in AutoriUlogeListView.Groups)
@@ -164,7 +165,7 @@ namespace KnjiznicaApp
             
             DataAcces.InsertKnjigaAutorUloga(autoriInsertList);
             UrediDataGridView.DataSource = DataAcces.GetAllKnjige();
-
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
