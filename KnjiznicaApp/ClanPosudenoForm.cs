@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -86,22 +87,33 @@ namespace KnjiznicaApp
 
         private void RezerviranoDG_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-           if (RezerviranoDG.Columns[e.ColumnIndex].Name == "Dostupno")
+            if (RezerviranoDG.Columns[e.ColumnIndex].Name == "Dostupno")
             {
 
-                int brProduzenja = (int)RezerviranoDG["Br_Produzenja_Rez", e.RowIndex].Value + 1;
-                DateTime rokPovratka = ((DateTime)RezerviranoDG["Datum_Posudbe_Rez", e.RowIndex].Value).AddDays(21 * brProduzenja);
+                // int brProduzenja = (int)RezerviranoDG["Br_Produzenja_Rez", e.RowIndex].Value + 1;
+                //DateTime rokPovratka = ((DateTime)RezerviranoDG["Datum_Posudbe_Rez", e.RowIndex].Value).AddDays(21 * brProduzenja);
 
-                if (RezerviranoDG["Datum_Vracanja", e.RowIndex].Value != null)
+                int brIspred = (int)RezerviranoDG["BrRezervacijaIspred", e.RowIndex].Value;
+                if (RezerviranoDG["Dat_Vracanja", e.RowIndex].Value.ToString()=="")
                 {
-                    e.Value = "Dostupno";
-                    e.CellStyle.ForeColor = Color.Green;
+                    e.Value = (brIspred+1).ToString()+". u redu";
+                    e.CellStyle.ForeColor = Color.Black;
                 }
                 else
                 {
-                    e.Value = rokPovratka.ToShortDateString();
+                    if ((int)RezerviranoDG["BrRezervacijaIspred", e.RowIndex].Value == 0)
+                    {
+                        e.Value = "Dostupno";
+                        e.CellStyle.ForeColor = Color.Green;
+                    }
+                    else
+                    {
+                        e.Value = (brIspred + 1).ToString() + ". u redu";
+                        e.CellStyle.ForeColor = Color.Black;
+                    }
                 }
+
             }
-        }
-    }
+            }
+}
 }

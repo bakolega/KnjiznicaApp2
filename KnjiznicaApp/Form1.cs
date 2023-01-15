@@ -72,14 +72,21 @@ namespace KnjiznicaApp
 
         private void OpenKnjFormButton_Click(object sender, EventArgs e)
         {
-            KnjiznicarForm KnjizForm = new KnjiznicarForm();
-            this.Hide();
-            KnjizForm.ShowDialog();
-            //this.Close();
-        }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
+            int idLogin = DataAcces.KnjiznicarLogin(UsernameTxtBox.Text, PasswordTxtBox.Text);
+            if (idLogin == -1)
+            {
+                MessageBox.Show("Krivo korisnicko ime ili lozinka");
+            }
+            else
+            {
+
+                KnjiznicarForm KnjizForm = new KnjiznicarForm(idLogin, UsernameTxtBox.Text);
+                this.Hide();
+                KnjizForm.ShowDialog();
+                //this.Close();
+            }
+
 
         }
     }

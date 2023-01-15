@@ -78,7 +78,6 @@
             this.label3.Size = new System.Drawing.Size(76, 13);
             this.label3.TabIndex = 12;
             this.label3.Text = "Korisnicko Ime";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label4
             // 

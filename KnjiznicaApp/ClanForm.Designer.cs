@@ -28,22 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TraziTxtBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.searchIzborComboBox = new System.Windows.Forms.ComboBox();
             this.OdjavaButton = new System.Windows.Forms.Button();
             this.ClanDataGridView = new System.Windows.Forms.DataGridView();
-            this.knjigaIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nazivDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.autoriDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.prevoditeljiDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.godinaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mjestoIzdavanjaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.izdavacDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.getAllKnjigeForIspisBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.knjiznicaDataSet = new KnjiznicaApp.KnjiznicaDataSet();
+            this.KnjigaID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Naziv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Autori = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Prevoditelji = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Godina = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MjestoIzdavanja = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Izdavac = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IDUrediTxtBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -55,9 +52,6 @@
             this.MjestoIzdavanjaTxtBox = new System.Windows.Forms.TextBox();
             this.IzdavacTxtBox = new System.Windows.Forms.TextBox();
             this.TraziButton = new System.Windows.Forms.Button();
-            this.getWhereNazivKnjigeBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.getWhereNazivKnjigeTableAdapter = new KnjiznicaApp.KnjiznicaDataSetTableAdapters.GetWhereNazivKnjigeTableAdapter();
-            this.getAllKnjigeForIspisTableAdapter = new KnjiznicaApp.KnjiznicaDataSetTableAdapters.GetAllKnjigeForIspisTableAdapter();
             this.AutoriUlogeListView = new System.Windows.Forms.ListView();
             this.AutorColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.kopijeDG = new System.Windows.Forms.DataGridView();
@@ -65,11 +59,8 @@
             this.Lokacija = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dostupno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Rezervacije = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.button1 = new System.Windows.Forms.Button();
+            this.OpenPosudenoButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ClanDataGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.knjiznicaDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.getWhereNazivKnjigeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kopijeDG)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,7 +70,6 @@
             this.TraziTxtBox.Name = "TraziTxtBox";
             this.TraziTxtBox.Size = new System.Drawing.Size(100, 20);
             this.TraziTxtBox.TabIndex = 1;
-            this.TraziTxtBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label1
             // 
@@ -89,17 +79,15 @@
             this.label1.Size = new System.Drawing.Size(47, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Pretraga";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // comboBox1
+            // searchIzborComboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(168, 6);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 3;
-            this.comboBox1.Text = "Katalog";
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.searchIzborComboBox.FormattingEnabled = true;
+            this.searchIzborComboBox.Location = new System.Drawing.Point(168, 6);
+            this.searchIzborComboBox.Name = "searchIzborComboBox";
+            this.searchIzborComboBox.Size = new System.Drawing.Size(121, 21);
+            this.searchIzborComboBox.TabIndex = 3;
+            this.searchIzborComboBox.Text = "Katalog";
             // 
             // OdjavaButton
             // 
@@ -115,84 +103,74 @@
             // 
             this.ClanDataGridView.AllowUserToAddRows = false;
             this.ClanDataGridView.AllowUserToDeleteRows = false;
-            this.ClanDataGridView.AutoGenerateColumns = false;
+            this.ClanDataGridView.AllowUserToResizeRows = false;
             this.ClanDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ClanDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.knjigaIDDataGridViewTextBoxColumn,
-            this.nazivDataGridViewTextBoxColumn,
-            this.autoriDataGridViewTextBoxColumn,
-            this.prevoditeljiDataGridViewTextBoxColumn,
-            this.godinaDataGridViewTextBoxColumn,
-            this.mjestoIzdavanjaDataGridViewTextBoxColumn,
-            this.izdavacDataGridViewTextBoxColumn});
-            this.ClanDataGridView.DataSource = this.getAllKnjigeForIspisBindingSource;
+            this.KnjigaID,
+            this.Naziv,
+            this.Autori,
+            this.Prevoditelji,
+            this.Godina,
+            this.MjestoIzdavanja,
+            this.Izdavac});
             this.ClanDataGridView.Location = new System.Drawing.Point(12, 33);
+            this.ClanDataGridView.MultiSelect = false;
             this.ClanDataGridView.Name = "ClanDataGridView";
             this.ClanDataGridView.ReadOnly = true;
             this.ClanDataGridView.RowHeadersVisible = false;
+            this.ClanDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ClanDataGridView.Size = new System.Drawing.Size(704, 594);
             this.ClanDataGridView.TabIndex = 5;
-            this.ClanDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ClanDataGridView_CellContentClick);
             this.ClanDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ClanDataGridView_CellDoubleClick);
             // 
-            // knjigaIDDataGridViewTextBoxColumn
+            // KnjigaID
             // 
-            this.knjigaIDDataGridViewTextBoxColumn.DataPropertyName = "KnjigaID";
-            this.knjigaIDDataGridViewTextBoxColumn.HeaderText = "KnjigaID";
-            this.knjigaIDDataGridViewTextBoxColumn.Name = "knjigaIDDataGridViewTextBoxColumn";
-            this.knjigaIDDataGridViewTextBoxColumn.ReadOnly = true;
+            this.KnjigaID.DataPropertyName = "KnjigaID";
+            this.KnjigaID.HeaderText = "KnjigaID";
+            this.KnjigaID.Name = "KnjigaID";
+            this.KnjigaID.ReadOnly = true;
             // 
-            // nazivDataGridViewTextBoxColumn
+            // Naziv
             // 
-            this.nazivDataGridViewTextBoxColumn.DataPropertyName = "Naziv";
-            this.nazivDataGridViewTextBoxColumn.HeaderText = "Naziv";
-            this.nazivDataGridViewTextBoxColumn.Name = "nazivDataGridViewTextBoxColumn";
-            this.nazivDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Naziv.DataPropertyName = "Naziv";
+            this.Naziv.HeaderText = "Naziv";
+            this.Naziv.Name = "Naziv";
+            this.Naziv.ReadOnly = true;
             // 
-            // autoriDataGridViewTextBoxColumn
+            // Autori
             // 
-            this.autoriDataGridViewTextBoxColumn.DataPropertyName = "Autori";
-            this.autoriDataGridViewTextBoxColumn.HeaderText = "Autori";
-            this.autoriDataGridViewTextBoxColumn.Name = "autoriDataGridViewTextBoxColumn";
-            this.autoriDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Autori.DataPropertyName = "Autori";
+            this.Autori.HeaderText = "Autori";
+            this.Autori.Name = "Autori";
+            this.Autori.ReadOnly = true;
             // 
-            // prevoditeljiDataGridViewTextBoxColumn
+            // Prevoditelji
             // 
-            this.prevoditeljiDataGridViewTextBoxColumn.DataPropertyName = "Prevoditelji";
-            this.prevoditeljiDataGridViewTextBoxColumn.HeaderText = "Prevoditelji";
-            this.prevoditeljiDataGridViewTextBoxColumn.Name = "prevoditeljiDataGridViewTextBoxColumn";
-            this.prevoditeljiDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Prevoditelji.DataPropertyName = "Prevoditelji";
+            this.Prevoditelji.HeaderText = "Prevoditelji";
+            this.Prevoditelji.Name = "Prevoditelji";
+            this.Prevoditelji.ReadOnly = true;
             // 
-            // godinaDataGridViewTextBoxColumn
+            // Godina
             // 
-            this.godinaDataGridViewTextBoxColumn.DataPropertyName = "Godina";
-            this.godinaDataGridViewTextBoxColumn.HeaderText = "Godina";
-            this.godinaDataGridViewTextBoxColumn.Name = "godinaDataGridViewTextBoxColumn";
-            this.godinaDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Godina.DataPropertyName = "Godina";
+            this.Godina.HeaderText = "Godina";
+            this.Godina.Name = "Godina";
+            this.Godina.ReadOnly = true;
             // 
-            // mjestoIzdavanjaDataGridViewTextBoxColumn
+            // MjestoIzdavanja
             // 
-            this.mjestoIzdavanjaDataGridViewTextBoxColumn.DataPropertyName = "MjestoIzdavanja";
-            this.mjestoIzdavanjaDataGridViewTextBoxColumn.HeaderText = "MjestoIzdavanja";
-            this.mjestoIzdavanjaDataGridViewTextBoxColumn.Name = "mjestoIzdavanjaDataGridViewTextBoxColumn";
-            this.mjestoIzdavanjaDataGridViewTextBoxColumn.ReadOnly = true;
+            this.MjestoIzdavanja.DataPropertyName = "MjestoIzdavanja";
+            this.MjestoIzdavanja.HeaderText = "Mjesto Izdavanja";
+            this.MjestoIzdavanja.Name = "MjestoIzdavanja";
+            this.MjestoIzdavanja.ReadOnly = true;
             // 
-            // izdavacDataGridViewTextBoxColumn
+            // Izdavac
             // 
-            this.izdavacDataGridViewTextBoxColumn.DataPropertyName = "Izdavac";
-            this.izdavacDataGridViewTextBoxColumn.HeaderText = "Izdavac";
-            this.izdavacDataGridViewTextBoxColumn.Name = "izdavacDataGridViewTextBoxColumn";
-            this.izdavacDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // getAllKnjigeForIspisBindingSource
-            // 
-            this.getAllKnjigeForIspisBindingSource.DataMember = "GetAllKnjigeForIspis";
-            this.getAllKnjigeForIspisBindingSource.DataSource = this.knjiznicaDataSet;
-            // 
-            // knjiznicaDataSet
-            // 
-            this.knjiznicaDataSet.DataSetName = "KnjiznicaDataSet";
-            this.knjiznicaDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.Izdavac.DataPropertyName = "Izdavac";
+            this.Izdavac.HeaderText = "Izdavač";
+            this.Izdavac.Name = "Izdavac";
+            this.Izdavac.ReadOnly = true;
             // 
             // IDUrediTxtBox
             // 
@@ -291,19 +269,6 @@
             this.TraziButton.UseVisualStyleBackColor = true;
             this.TraziButton.Click += new System.EventHandler(this.TraziButton_Click);
             // 
-            // getWhereNazivKnjigeBindingSource
-            // 
-            this.getWhereNazivKnjigeBindingSource.DataMember = "GetWhereNazivKnjige";
-            this.getWhereNazivKnjigeBindingSource.DataSource = this.knjiznicaDataSet;
-            // 
-            // getWhereNazivKnjigeTableAdapter
-            // 
-            this.getWhereNazivKnjigeTableAdapter.ClearBeforeFill = true;
-            // 
-            // getAllKnjigeForIspisTableAdapter
-            // 
-            this.getAllKnjigeForIspisTableAdapter.ClearBeforeFill = true;
-            // 
             // AutoriUlogeListView
             // 
             this.AutoriUlogeListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -318,7 +283,7 @@
             // 
             // AutorColumn
             // 
-            this.AutorColumn.Text = "Autor";
+            this.AutorColumn.Text = "Autori";
             this.AutorColumn.Width = 231;
             // 
             // kopijeDG
@@ -341,7 +306,7 @@
             this.kopijeDG.ShowEditingIcon = false;
             this.kopijeDG.Size = new System.Drawing.Size(412, 367);
             this.kopijeDG.TabIndex = 29;
-            this.kopijeDG.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.kopijeDG.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.kopijeDG_CellContentClick);
             this.kopijeDG.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.kopijeDG_CellFormatting);
             // 
             // ID
@@ -361,8 +326,8 @@
             // Dostupno
             // 
             this.Dostupno.DataPropertyName = "Dostupno";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Dostupno.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Dostupno.DefaultCellStyle = dataGridViewCellStyle2;
             this.Dostupno.HeaderText = "Dostupno";
             this.Dostupno.Name = "Dostupno";
             this.Dostupno.ReadOnly = true;
@@ -373,22 +338,22 @@
             this.Rezervacije.Name = "Rezervacije";
             this.Rezervacije.ReadOnly = true;
             // 
-            // button1
+            // OpenPosudenoButton
             // 
-            this.button1.Location = new System.Drawing.Point(12, 633);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(115, 50);
-            this.button1.TabIndex = 30;
-            this.button1.Text = "Posuđeno i rezervirano";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.OpenPosudenoButton.Location = new System.Drawing.Point(12, 633);
+            this.OpenPosudenoButton.Name = "OpenPosudenoButton";
+            this.OpenPosudenoButton.Size = new System.Drawing.Size(115, 50);
+            this.OpenPosudenoButton.TabIndex = 30;
+            this.OpenPosudenoButton.Text = "Posuđeno i rezervirano";
+            this.OpenPosudenoButton.UseVisualStyleBackColor = true;
+            this.OpenPosudenoButton.Click += new System.EventHandler(this.OpenPosudenoButton_Click);
             // 
             // ClanForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1559, 694);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.OpenPosudenoButton);
             this.Controls.Add(this.kopijeDG);
             this.Controls.Add(this.AutoriUlogeListView);
             this.Controls.Add(this.TraziButton);
@@ -404,7 +369,7 @@
             this.Controls.Add(this.UrediNazivTxtBox);
             this.Controls.Add(this.ClanDataGridView);
             this.Controls.Add(this.OdjavaButton);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.searchIzborComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.TraziTxtBox);
             this.Name = "ClanForm";
@@ -412,9 +377,6 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ClanForm_FormClosed);
             this.Load += new System.EventHandler(this.ClanForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ClanDataGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.getAllKnjigeForIspisBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.knjiznicaDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.getWhereNazivKnjigeBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kopijeDG)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -424,7 +386,7 @@
         #endregion
         private System.Windows.Forms.TextBox TraziTxtBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox searchIzborComboBox;
         private System.Windows.Forms.Button OdjavaButton;
         private System.Windows.Forms.DataGridView ClanDataGridView;
         private System.Windows.Forms.TextBox IDUrediTxtBox;
@@ -438,18 +400,6 @@
         private System.Windows.Forms.TextBox MjestoIzdavanjaTxtBox;
         private System.Windows.Forms.TextBox IzdavacTxtBox;
         private System.Windows.Forms.Button TraziButton;
-        private System.Windows.Forms.DataGridViewTextBoxColumn knjigaIDDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nazivDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn autoriDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn prevoditeljiDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn godinaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mjestoIzdavanjaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn izdavacDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource getWhereNazivKnjigeBindingSource;
-        private KnjiznicaDataSet knjiznicaDataSet;
-        private KnjiznicaDataSetTableAdapters.GetWhereNazivKnjigeTableAdapter getWhereNazivKnjigeTableAdapter;
-        private System.Windows.Forms.BindingSource getAllKnjigeForIspisBindingSource;
-        private KnjiznicaDataSetTableAdapters.GetAllKnjigeForIspisTableAdapter getAllKnjigeForIspisTableAdapter;
         private System.Windows.Forms.ListView AutoriUlogeListView;
         private System.Windows.Forms.ColumnHeader AutorColumn;
         private System.Windows.Forms.DataGridView kopijeDG;
@@ -457,6 +407,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Lokacija;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dostupno;
         private System.Windows.Forms.DataGridViewButtonColumn Rezervacije;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button OpenPosudenoButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn KnjigaID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Naziv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Autori;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Prevoditelji;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Godina;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MjestoIzdavanja;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Izdavac;
     }
 }

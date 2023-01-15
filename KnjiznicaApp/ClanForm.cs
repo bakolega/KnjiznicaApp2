@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,36 +20,18 @@ namespace KnjiznicaApp
         string Username;
         public ClanForm(int IDlogin, string UsernameClana)
         {
-            IDClana=IDlogin;
-            Username=UsernameClana;
-          
+            IDClana = IDlogin;
+            Username = UsernameClana;
+
             InitializeComponent();
-            this.Text = Username + " ("+IDClana+")";
+            this.Text = Username + " (" + IDClana + ")";
         }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void ClanForm_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'knjiznicaDataSet.GetAllKnjigeForIspis' table. You can move, or remove it, as needed.
-            this.getAllKnjigeForIspisTableAdapter.Fill(this.knjiznicaDataSet.GetAllKnjigeForIspis);
-            // TODO: This line of code loads data into the 'knjiznicaDataSet.GetAllKnjigeForIspis' table. You can move, or remove it, as needed.
+            ClanDataGridView.DataSource = DataAcces.GetAllKnjige();
+            ClanDataGridView.ClearSelection();
         }
 
-
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
 
         private void OdjavaButton_Click(object sender, EventArgs e)
         {
@@ -59,9 +43,12 @@ namespace KnjiznicaApp
 
             if (e.RowIndex > -1)
             {
-                int tempID = (int)ClanDataGridView[0, e.RowIndex].Value;
+                int tempID = (int)ClanDataGridView["KnjigaID", e.RowIndex].Value;
                 IDUrediTxtBox.Text = tempID.ToString();//Ispisi izabrani ID
 
+               
+
+                
                 Informacije tempInfo = DataAcces.GetInformacije(tempID);// infomracije osim autora
 
                 UrediNazivTxtBox.Text = tempInfo.Naziv;
@@ -69,7 +56,7 @@ namespace KnjiznicaApp
                 JezikTextBox.Text = tempInfo.Jezik;
                 MjestoIzdavanjaTxtBox.Text = tempInfo.Mjesto;
 
-             
+
                 AutoriUlogeListView.Items.Clear();
                 AutoriUlogeListView.Groups.Clear();
 
@@ -89,19 +76,17 @@ namespace KnjiznicaApp
                     i++;
                 }
 
-                //  kopijeDG.DataSource = DataAcces.getKopije(tempID);
+          
                 kopijeDG.Tag = tempID;
-                kopijeDG.DataSource= DataAcces.GetKopije2(tempID, IDClana);
+                kopijeDG.DataSource = DataAcces.GetKopije2(tempID, IDClana);
 
-             //   this.kopijeDG.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-
+                this.Refresh();
 
             }
 
         }
 
-      
+
 
 
         private void ClanForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -109,35 +94,16 @@ namespace KnjiznicaApp
             InterForm.goback(this);
         }
 
-        private void ClanDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void TraziButton_Click(object sender, EventArgs e)
         {
-            this.getWhereNazivKnjigeTableAdapter.Fill(this.knjiznicaDataSet.GetWhereNazivKnjige, TraziTxtBox.Text);
-            ClanDataGridView.DataSource = getWhereNazivKnjigeBindingSource;
+            ClanDataGridView.DataSource = DataAcces.GetAllKnjige();
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //Provjerava je li kliknut botun i inserta rezervaciju, zatim ponovo updatea datagridView
-            var senderGrid = (DataGridView)sender;
-           
-            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
-            {
-                DataAcces.InsertRezervacija((int)kopijeDG["ID",e.RowIndex].Value, IDClana);
 
-                kopijeDG.DataSource = DataAcces.GetKopije2((int)kopijeDG.Tag, IDClana);
-            }
-
-
-        }
 
         private void kopijeDG_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            //Formatira stupac dostupno i sukladno prikazuje botun; -1 znaci da je clan već rezervirao ovu kopiju
+            //Formatira stupac dostupno i stupac rezervacije. 
             if (kopijeDG.Columns[e.ColumnIndex].Name == "Dostupno")
             {
                 if (e.Value is 0)
@@ -161,7 +127,7 @@ namespace KnjiznicaApp
                     DataGridViewTextBoxCell txtcell = new DataGridViewTextBoxCell();
                     kopijeDG["Rezervacije", e.RowIndex] = txtcell;
                 }
-                else
+                else if (e.Value is 1)
                 {
                     e.Value = "✓";
                     e.CellStyle.ForeColor = Color.Green;
@@ -171,13 +137,29 @@ namespace KnjiznicaApp
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+       
+
+        private void kopijeDG_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            ClanPosudenoForm clPosudeno= new ClanPosudenoForm(IDClana, Username);
+            //Provjerava je li kliknut botun i inserta rezervaciju, zatim ponovo updatea datagridView
+            var senderGrid = (DataGridView)sender;
+
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+            {
+                DataAcces.InsertRezervacija((int)kopijeDG["ID", e.RowIndex].Value, IDClana);
+
+                kopijeDG.DataSource = DataAcces.GetKopije2((int)kopijeDG.Tag, IDClana);
+            }
+        }
+
+        private void OpenPosudenoButton_Click(object sender, EventArgs e)
+        {
+            //Otvara formu za pregled posuđenog i rezerviranog
+            ClanPosudenoForm clPosudeno = new ClanPosudenoForm(IDClana, Username);
             //this.Hide();
             clPosudeno.ShowDialog();
         }
 
-
+        
     }
 }

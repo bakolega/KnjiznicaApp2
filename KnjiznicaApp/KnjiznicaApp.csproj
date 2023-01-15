@@ -61,6 +61,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>KnjiznicaDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="PosudbaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PosudbaForm.Designer.cs">
+      <DependentUpon>PosudbaForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UrediKatalogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,11 +107,15 @@
     <EmbeddedResource Include="ClanPosudenoForm.resx">
       <DependentUpon>ClanPosudenoForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PosudbaForm.resx">
+      <DependentUpon>PosudbaForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UrediKatalogForm.resx">
       <DependentUpon>UrediKatalogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="KnjiznicarForm.resx">
       <DependentUpon>KnjiznicarForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

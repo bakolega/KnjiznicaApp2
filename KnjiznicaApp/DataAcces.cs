@@ -46,6 +46,24 @@ namespace KnjiznicaApp
             }
 
         }
+
+        static public int GetRezerviarniClan(int kopijaID)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                return connection.Query<int>($"select ClanID from Rezervacija  where Rezervacija.KopijaID = {kopijaID}").ToList().First();
+            }
+
+        }
+
+        static public int GetCurrentPosudbaForKopija(int kopijaID)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                return connection.Query<int>($"dbo.GetCurrentPosudbaForKopija @kopijaID = {kopijaID}").ToList().First();
+            }
+
+        }
         public static void InsertKnjiga(string naziv,int? izdavacID , int? godina,int? mjestoID ,int? JezikID) 
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
@@ -146,6 +164,16 @@ namespace KnjiznicaApp
             }
 
         }
+        static public void DeleteRezervacijaForKopija(int kopijaID, int clanID)
+        {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.DeleteRezervacijaForKopijaClan @kopijaID={kopijaID}, @clanID={clanID}");
+
+            }
+
+        }
 
         static public List<KopijaKnjige> GetKopije (int ID)
         {
@@ -160,13 +188,26 @@ namespace KnjiznicaApp
 
         static public DataTable GetKopije2(int ID, int clanID)
         {
-                //Za id vraca sve kopije tog izdanja: ID, Lokacija, Dostupno: 1 / nedostupno:0, ovaj clan vec rezervirao -1 /-2 ovaj clan vec posudio
+                //Za id vraca sve kopije tog izdanja: ID, Lokacija; 1:Dostupno / 0:Nedostupno/ -1:ovaj clan vec rezervirao / -2: ovaj clan vec posudio
                 using (SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
             { 
                 SqlDataAdapter adp = new SqlDataAdapter($"dbo.GetKopije @ID = {ID}, @IDclana = {clanID}", conn);
                 DataTable data = new DataTable();
                 adp.Fill(data);
     
+                return data;
+            }
+        }
+        
+        static public DataTable GetKopijeKnjiznicar(int ID)
+        {
+            //Za id vraca sve kopije tog izdanja: ID, Lokacija; 1:Dostupno / 0:Posuđeno/ -1:Rezervirano
+            using (SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                SqlDataAdapter adp = new SqlDataAdapter($"dbo.GetKopijeKnjiznicar @ID = {ID}", conn);
+                DataTable data = new DataTable();
+                adp.Fill(data);
+
                 return data;
             }
         }
@@ -202,6 +243,36 @@ namespace KnjiznicaApp
 
         }
 
+        static public int KnjiznicarLogin(string username, string lozinka)
+        {
+            //Za username i lozinku vraca ID korisnika ili -1 ako ne postoji/krivo
+
+            if (username == "" || lozinka == "")
+                return -1;
+
+
+            using (SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+
+                SqlDataAdapter adp = new SqlDataAdapter($"dbo.LoginKnji @User={username}, @Loz = {lozinka}", conn);
+                DataTable data = new DataTable();
+
+                adp.Fill(data);
+
+                if (data.Rows.Count == 0)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return (int)data.Rows[0][0];
+                }
+
+
+            }
+
+        }
+
         static public void InsertRezervacija(int kopijaID, int clanID)
         {
            
@@ -212,12 +283,46 @@ namespace KnjiznicaApp
 
         }
 
+        static public void InsertPosudba(int kopijaID, int clanID, int knjiznicarID)
+        {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.InsertPosudba @kopijaID = {kopijaID}, @clanID ={clanID}, @knjiznicarID={knjiznicarID}");
+            }
+
+        }
+        static public void UpdatePovratakPosudbe(int posudbaID)
+        {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                connection.Query($"dbo.UpdatePovratakPosudbe @PosudbaID={posudbaID}");
+            }
+
+        }
+
+
+
         static public DataTable GetPosudeno(int clanID)
         {
 
             using(SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
             {
                 SqlDataAdapter adp = new SqlDataAdapter($"dbo.GetPosudeno @clanID = {clanID}", conn);
+                DataTable data = new DataTable();
+                adp.Fill(data);
+
+                return data;
+            }
+
+        }
+        static public DataTable GetAllClan()
+        {
+
+            using (SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                SqlDataAdapter adp = new SqlDataAdapter($"dbo.GetAllClan", conn);
                 DataTable data = new DataTable();
                 adp.Fill(data);
 
@@ -251,6 +356,8 @@ namespace KnjiznicaApp
 
         }
 
+        
+
         static public void DeleteRezervacija(int idRezervacije)
         {
 
@@ -261,6 +368,20 @@ namespace KnjiznicaApp
             }
 
         }
+        static public DataTable GetAllKnjige()
+        {
+
+            using (SqlConnection conn = new SqlConnection(Helper.CnnVal("Knjiznica")))
+            {
+                SqlDataAdapter adp = new SqlDataAdapter("dbo.GetAllKnjigeForIspis", conn);
+                DataTable data = new DataTable();
+                adp.Fill(data);
+
+                return data;
+            }
+
+        }
+        
 
     }
 }

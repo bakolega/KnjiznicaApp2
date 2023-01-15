@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.PosudenoDG = new System.Windows.Forms.DataGridView();
-            this.RezerviranoDG = new System.Windows.Forms.DataGridView();
             this.Naziv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Lokacija = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -38,13 +37,14 @@
             this.Br_Produzenja = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Produzi = new System.Windows.Forms.DataGridViewButtonColumn();
             this.PosudbaID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RezerviranoDG = new System.Windows.Forms.DataGridView();
             this.NazivRez = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.KopijaIDRez = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LokacijaRezervacije = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dostupno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Datum_Posudbe_Rez = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Datum_Vracanja = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Br_Produzenja_Rez = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Dat_Vracanja = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BrRezervacijaIspred = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RezervacijaID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Otkaži = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.PosudenoDG)).BeginInit();
@@ -67,6 +67,7 @@
             this.Produzi,
             this.PosudbaID});
             this.PosudenoDG.Location = new System.Drawing.Point(12, 12);
+            this.PosudenoDG.MultiSelect = false;
             this.PosudenoDG.Name = "PosudenoDG";
             this.PosudenoDG.ReadOnly = true;
             this.PosudenoDG.RowHeadersVisible = false;
@@ -76,32 +77,6 @@
             this.PosudenoDG.TabIndex = 0;
             this.PosudenoDG.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PosudenoDG_CellContentClick);
             this.PosudenoDG.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.PosudenoDG_CellFormatting);
-            // 
-            // RezerviranoDG
-            // 
-            this.RezerviranoDG.AllowUserToAddRows = false;
-            this.RezerviranoDG.AllowUserToDeleteRows = false;
-            this.RezerviranoDG.AllowUserToResizeRows = false;
-            this.RezerviranoDG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.RezerviranoDG.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.NazivRez,
-            this.KopijaIDRez,
-            this.LokacijaRezervacije,
-            this.Dostupno,
-            this.Datum_Posudbe_Rez,
-            this.Datum_Vracanja,
-            this.Br_Produzenja_Rez,
-            this.RezervacijaID,
-            this.Otkaži});
-            this.RezerviranoDG.Location = new System.Drawing.Point(721, 12);
-            this.RezerviranoDG.MultiSelect = false;
-            this.RezerviranoDG.Name = "RezerviranoDG";
-            this.RezerviranoDG.ReadOnly = true;
-            this.RezerviranoDG.RowHeadersVisible = false;
-            this.RezerviranoDG.Size = new System.Drawing.Size(503, 424);
-            this.RezerviranoDG.TabIndex = 1;
-            this.RezerviranoDG.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RezerviranoDG_CellContentClick);
-            this.RezerviranoDG.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.RezerviranoDG_CellFormatting);
             // 
             // Naziv
             // 
@@ -159,6 +134,32 @@
             this.PosudbaID.ReadOnly = true;
             this.PosudbaID.Visible = false;
             // 
+            // RezerviranoDG
+            // 
+            this.RezerviranoDG.AllowUserToAddRows = false;
+            this.RezerviranoDG.AllowUserToDeleteRows = false;
+            this.RezerviranoDG.AllowUserToResizeRows = false;
+            this.RezerviranoDG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.RezerviranoDG.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.NazivRez,
+            this.KopijaIDRez,
+            this.LokacijaRezervacije,
+            this.Dostupno,
+            this.Datum_Posudbe_Rez,
+            this.Dat_Vracanja,
+            this.BrRezervacijaIspred,
+            this.RezervacijaID,
+            this.Otkaži});
+            this.RezerviranoDG.Location = new System.Drawing.Point(721, 12);
+            this.RezerviranoDG.MultiSelect = false;
+            this.RezerviranoDG.Name = "RezerviranoDG";
+            this.RezerviranoDG.ReadOnly = true;
+            this.RezerviranoDG.RowHeadersVisible = false;
+            this.RezerviranoDG.Size = new System.Drawing.Size(503, 424);
+            this.RezerviranoDG.TabIndex = 1;
+            this.RezerviranoDG.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RezerviranoDG_CellContentClick);
+            this.RezerviranoDG.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.RezerviranoDG_CellFormatting);
+            // 
             // NazivRez
             // 
             this.NazivRez.DataPropertyName = "Naziv";
@@ -194,21 +195,21 @@
             this.Datum_Posudbe_Rez.ReadOnly = true;
             this.Datum_Posudbe_Rez.Visible = false;
             // 
-            // Datum_Vracanja
+            // Dat_Vracanja
             // 
-            this.Datum_Vracanja.DataPropertyName = "Dat_Vracanja";
-            this.Datum_Vracanja.HeaderText = "Datum Povrata";
-            this.Datum_Vracanja.Name = "Datum_Vracanja";
-            this.Datum_Vracanja.ReadOnly = true;
-            this.Datum_Vracanja.Visible = false;
+            this.Dat_Vracanja.DataPropertyName = "Dat_Vracanja";
+            this.Dat_Vracanja.HeaderText = "Dat_Vracanja";
+            this.Dat_Vracanja.Name = "Dat_Vracanja";
+            this.Dat_Vracanja.ReadOnly = true;
+            this.Dat_Vracanja.Visible = false;
             // 
-            // Br_Produzenja_Rez
+            // BrRezervacijaIspred
             // 
-            this.Br_Produzenja_Rez.DataPropertyName = "Br_Produzenja";
-            this.Br_Produzenja_Rez.HeaderText = "Br_Produzenja_Rez";
-            this.Br_Produzenja_Rez.Name = "Br_Produzenja_Rez";
-            this.Br_Produzenja_Rez.ReadOnly = true;
-            this.Br_Produzenja_Rez.Visible = false;
+            this.BrRezervacijaIspred.DataPropertyName = "RezervacijaPrije";
+            this.BrRezervacijaIspred.HeaderText = "BrRezervacijaIspred";
+            this.BrRezervacijaIspred.Name = "BrRezervacijaIspred";
+            this.BrRezervacijaIspred.ReadOnly = true;
+            this.BrRezervacijaIspred.Visible = false;
             // 
             // RezervacijaID
             // 
@@ -258,8 +259,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn LokacijaRezervacije;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dostupno;
         private System.Windows.Forms.DataGridViewTextBoxColumn Datum_Posudbe_Rez;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Datum_Vracanja;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Br_Produzenja_Rez;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Dat_Vracanja;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BrRezervacijaIspred;
         private System.Windows.Forms.DataGridViewTextBoxColumn RezervacijaID;
         private System.Windows.Forms.DataGridViewButtonColumn Otkaži;
     }
