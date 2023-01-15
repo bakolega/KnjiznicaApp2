@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnjiznicaApp", "KnjiznicaApp\KnjiznicaApp.csproj", "{82EF1D0A-8A83-4A06-819D-41585AE245EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnjiznicaTest", "KnjiznicaTest\KnjiznicaTest.csproj", "{9C059729-0F18-4BD1-971F-676F2881068B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{82EF1D0A-8A83-4A06-819D-41585AE245EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82EF1D0A-8A83-4A06-819D-41585AE245EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82EF1D0A-8A83-4A06-819D-41585AE245EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C059729-0F18-4BD1-971F-676F2881068B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C059729-0F18-4BD1-971F-676F2881068B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C059729-0F18-4BD1-971F-676F2881068B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C059729-0F18-4BD1-971F-676F2881068B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

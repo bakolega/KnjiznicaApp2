@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TraziTxtBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.searchIzborComboBox = new System.Windows.Forms.ComboBox();
@@ -125,6 +125,7 @@
             this.ClanDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ClanDataGridView.Size = new System.Drawing.Size(704, 594);
             this.ClanDataGridView.TabIndex = 5;
+            this.ClanDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ClanDataGridView_CellContentClick);
             this.ClanDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ClanDataGridView_CellDoubleClick);
             // 
             // KnjigaID
@@ -320,8 +321,8 @@
             // Dostupno
             // 
             this.Dostupno.DataPropertyName = "Dostupno";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Dostupno.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Dostupno.DefaultCellStyle = dataGridViewCellStyle1;
             this.Dostupno.HeaderText = "Dostupno";
             this.Dostupno.Name = "Dostupno";
             this.Dostupno.ReadOnly = true;

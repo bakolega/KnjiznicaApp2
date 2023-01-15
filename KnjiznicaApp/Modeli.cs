@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KnjiznicaApp
 {
-    internal class Knjiga 
+    public class Knjiga 
     {
         public int KnjigaID { get; set; }
         public string NazivPar { get; set; }
@@ -23,7 +23,7 @@ namespace KnjiznicaApp
     //    public int KopijaID { get; set; }
     //    public string Lokacija { get; set; }
     //}
-    internal class Uloga
+    public class Uloga
     {
         public int UloagaID { get; set; }
         public string UlogaNaziv { get; set; }
@@ -32,12 +32,12 @@ namespace KnjiznicaApp
             return UlogaNaziv;
         }
     }
-    internal class UlogaAutori
+    public class UlogaAutori
     {
         public string UlogaNaziv { get; set; }
         public string Autori { get; set; }
     }
-    internal class Informacije
+    public class Informacije
     {
         public string Naziv { get; set; }
         public string Jezik { get; set; }
@@ -45,30 +45,30 @@ namespace KnjiznicaApp
         public string Mjesto { get; set; }
     }
 
-    internal class Izdavac
+    public class Izdavac
     {
         public int IzdavacID { get; set; }
         public string Naziv { get; set; }
     }
 
-    internal class Jezik
+    public class Jezik
     {
         public int JezikID { get; set; }
         public string Naziv { get; set; }
     }
-    internal class Mjesto
+    public class Mjesto
     {
         public int MjestoID { get; set; }
         public string Naziv { get; set; }
     }
 
-    internal class ID
+    public class ID
     {
         public int knjigaID { get; set; }
         
     }
 
-    internal class Autor
+    public class Autor
     {
 
         public string AutorPrezimeIme { get; set; }
@@ -80,7 +80,7 @@ namespace KnjiznicaApp
         }
     }
 
-    internal class AutortoAdd
+    public class AutortoAdd
     {
 
         public string ime { get; set; }
@@ -88,7 +88,7 @@ namespace KnjiznicaApp
 
        
     }
-    internal class UlogaAutoriInsertHelper
+    public class UlogaAutoriInsertHelper
     {
         public int KnjigaID { get; set; }
         public int AutorID { get; set; }
@@ -97,7 +97,7 @@ namespace KnjiznicaApp
     }
 
 
-    internal class UlogaAutoriv2
+    public class UlogaAutoriv2
     {
         public UlogaAutoriv2(int ulogaID, string ulogaNaziv, string Autori)
         {
@@ -122,7 +122,7 @@ namespace KnjiznicaApp
         
     }
 
-    internal class Lokacija
+    public class Lokacija
     {
         public int LokacijaID { get; set; }
         public string Naziv { get; set; }

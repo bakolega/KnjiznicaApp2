@@ -150,5 +150,10 @@ namespace KnjiznicaApp
             (ClanDataGridView.DataSource as DataTable).DefaultView.RowFilter = DodatneMetode.FilterStringMaker(searchIzborComboBox.Text, TraziTxtBox.Text);
 
         }
+
+        private void ClanDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

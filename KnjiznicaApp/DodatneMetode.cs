@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace KnjiznicaApp
 {
-    internal class DodatneMetode
+    public class DodatneMetode
     {
 
         const double zakasninsaDanEur = 0.1;//Zakasnina u eurima
